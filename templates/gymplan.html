@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+
+{% block title %}Saliohjelmat{% endblock %}
+{% block content %}
+
+<form action="/gymplan" method="POST">
+Anna saliohjelman nimi: <input type"text" name="name">
+<br>
+<input type="submit" value="Tallenna">
+</form>
+
+{% endblock %}

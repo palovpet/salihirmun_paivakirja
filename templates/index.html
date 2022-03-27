@@ -4,6 +4,7 @@
 
 {% if session.user_id %}
 <p>Sisäänkirjautunut salihirmu: {{ session.user_name }}</p>
+<a href="/gymplan">Saliohjelmat</a>
 <a href="/logout">Kirjaudu ulos</a>
 {% else %}
 Et ole kirjautunut sisään. <a href="/login">Kirjaudu sisään</a>
