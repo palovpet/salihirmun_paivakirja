@@ -4,7 +4,7 @@ Sovelluksella kirjataan kuntosalitreenin sarjapainoja ja treenikertoja. Omia tre
 ### Toimintojen määrittelyt
 
 Käyttäjä voi kirjautua sovellukseen käyttäen käyttäjätunnusta ja pin-koodia. Tarvittavat toiminnot:
-- Käyttäjä kirjautuu syöttämällä käyttäjätunnuksen ja pin-koodin
+- Käyttäjä kirjautuu syöttämällä käyttäjätunnuksen ja salasanan
 - Uuden käyttäjätunnuksen voi luoda, jolloin tarkistetaan ettei samannimistä käyttäjää ole jo
 
 Käyttäjä voi luoda max 5 pohjaa kuntosalitreenille. Treenipohjalla on:
