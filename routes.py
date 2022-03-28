@@ -1,7 +1,7 @@
 from app import app
 from flask import render_template, request, redirect
 import users
-import gymplan
+import plans
 
 @app.route("/")
 def index():
@@ -41,11 +41,12 @@ def signin():
 
 @app.route("/gymplan", methods=["GET", "POST"])
 def gymplan():
+    list = plans.get_list()
     if request.method == "GET":
-        return render_template("gymplan.html")
+        return render_template("gymplan.html", count=len(list), plans=list)
     if request.method == "POST":
         name = request.form["name"]
-        if gymplan.create_new_gymplan(name):
+        if plans.create_new_gymplan(name):
             return redirect("/")
-
-
+        else:
+            return render_template("error.html",  message="Virhe uuden suunnitelman teossa")

@@ -1,5 +1,5 @@
 from db import db
-from flask import session
+from flask import session, request, abort
 from werkzeug.security import check_password_hash, generate_password_hash
 
 def login(username, password):
@@ -10,7 +10,8 @@ def login(username, password):
         return False
     else:
         if check_password_hash(user.password, password):
-            session["user_id"] = user.id
+            session["user_id"] = user[0]
+            print(user[0])
             session["user_name"] = username
             return True
         else:
