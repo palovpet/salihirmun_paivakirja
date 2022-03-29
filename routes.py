@@ -1,3 +1,4 @@
+from crypt import methods
 from app import app
 from flask import render_template, request, redirect
 import users
@@ -43,10 +44,11 @@ def signin():
 def gymplan():
     list = plans.get_list()
     if request.method == "GET":
-        return render_template("gymplan.html", count=len(list), plans=list)
+        return render_template("gymplan.html", plans=list)
     if request.method == "POST":
         name = request.form["name"]
         if plans.create_new_gymplan(name):
             return redirect("/")
         else:
             return render_template("error.html",  message="Virhe uuden suunnitelman teossa")
+

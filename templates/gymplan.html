@@ -3,15 +3,24 @@
 {% block title %}Saliohjelmat{% endblock %}
 {% block content %}
 
-{% for plan in plans %}
-<i>Suunnitelman nimi:</i> {{ plan[0] }}
-<p>
-{% endfor %}
+<select name="Saliohjelmasi">
+    {% for plan in plans %}
+    <option value= "{{ plan[0] }}""> {{ plan[0]}}</option>
+    {% endfor %}
 
+</select>
+
+<input type="submit" value="Näytä ja muokkaa">
+<br>
+<br>
+
+<h2>Luo uusi saliohjelma</h2>
 <form action="/gymplan" method="POST">
 Anna saliohjelman nimi: <input type"text" name="name">
-<br>
+
 <input type="submit" value="Tallenna">
 </form>
 
+<br>
+<a href="/">Palaa etusivulle</a>
 {% endblock %}
