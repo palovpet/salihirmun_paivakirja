@@ -54,15 +54,15 @@ def gymplan():
             return render_template("error.html",  message="Virhe uuden suunnitelman teossa")
 
 
-@app.route("/editplan", methods=["GET", "POST"])
+@app.route("/editplan", methods=["GET","POST"])
 def edit_plan():
-    list_moves = moves.get_moves()
-    plan_name=request.form["plan_name"]
-    plan_id = plans.get_id(plan_name)
-    list_moves_in_plans = moves.show_plan(plan_id)
-    return render_template("editplan.html", moves=list_moves, plan_name=plan_name, plan_id=plan_id, planinfo=list_moves_in_plans)
+    if request.method == "GET":
+        return render_template("editplan.html")
+    if request.method == "POST":
+        plan_name=request.form["plan_name"]
+        return render_template("editplan.html", moves=moves.get_moves(), plan_name=plan_name, plan_id=plans.get_id(plan_name), planinfo=plans.get_moves_in_plan(plans.get_id(plan_name)))
 
-@app.route("/addmove", methods=["POST"])
+@app.route("/addmove", methods=["POST", "GET"])
 def add_move_to_plan():
     plan_id = request.form["plan_id"]
     move_name = request.form["move_name"]
@@ -70,6 +70,6 @@ def add_move_to_plan():
     sets = request.form["sets"]
     reps = request.form["reps"]
     weights = 0
-    if plans.add_move(plan_id, move_id, sets, reps, weights):
-        print("onnistui")
-    return redirect("/editplan")
+    if not plans.add_move(plan_id, move_id, sets, reps, weights):
+        return render_template("error.html", message="Virhe lisättäessä liikettä suunnitelmaan")
+    return render_template("editplan.html", moves=moves.get_moves(), plan_name=plans.get_name(plan_id), plan_id=plan_id, planinfo=plans.get_moves_in_plan(plan_id))

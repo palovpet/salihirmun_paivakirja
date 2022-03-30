@@ -2,7 +2,6 @@
 
 {% block title %}Saliohjelman muokkaus{% endblock %}
 {% block content %}
-
 <br>
 Muokattava saliohjelma: {{ plan_name }}
 <br>
@@ -11,14 +10,15 @@ Muokattava saliohjelma: {{ plan_name }}
 {{ move[1] }} sarjaa, {{ move[2] }} toistoa, {{ move[3] }}kg
 <br>
 {% endfor %}
-
+<br>
+<br>
 <form action="/addmove" method="POST">
 <label for="move_name">Valitse lisättävä liike</label>
 <input name="move_name" list="move_name">
 <datalist id="move_name">
-    {% for move in moves %}
-    <option value= "{{ move.name }}""> {{ move.name }}</option>
-    {% endfor %}
+  {% for move in moves %}
+  <option value= "{{ move.name }}""> {{ move.name }}</option>
+  {% endfor %}
 </datalist>
 <br>
 
@@ -31,5 +31,6 @@ Toistoja: <input type="number" name="reps">
 <input type="submit" value="Lisää liike">
 </a>
 </form>
+<a href="/">Palaa etusivulle</a>
 
 {% endblock %}

@@ -24,6 +24,17 @@ def get_id(name):
     id = result.fetchone()[0]
     return id
 
+def get_name(id):
+    sql = "SELECT name FROM gymplans WHERE id=:id"
+    result = db.session.execute(sql, {"id":id})
+    name = result.fetchone()[0]
+    return name
+
+def get_moves_in_plan(plan_id):
+    sql = "SELECT m.name, mi.sets, mi.reps, mi.weights FROM moves m, moveinformations mi WHERE mi.id IN (SELECT id FROM movesinplans WHERE plan_id=:plan_id) AND m.id=mi.move_id"
+    result = db.session.execute(sql, {"plan_id":plan_id})
+    return result.fetchall()
+
 def add_move(plan_id, move_id, sets, reps, weights):
     sql = "INSERT INTO moveinformations (move_id, sets, reps, weights) VALUES (:move_id, :sets, :reps, :weights) RETURNING id"
     result = db.session.execute(sql, {"move_id":move_id, "sets":sets, "reps":reps, "weights":weights})
