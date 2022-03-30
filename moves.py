@@ -6,8 +6,8 @@ def get_moves():
     result = db.session.execute(sql)
     return result.fetchall()
 
-def show_plan(id):
-    sql = "SELECT M.name, I.sets, I.reps, I.weights FROM moves M, moveinformations I, movesinplans P WHERE M.id=I.id AND I.id=P.move_id AND P.plan_id=:id"
-    result = db.session.execute(sql, {"id":id})
-    moves = result.fetchall()
-    return moves
+def show_plan(plan_id):
+    sql = "SELECT m.name, mi.sets, mi.reps, mi.weights FROM moves m, moveinformations mi WHERE mi.id IN (SELECT id FROM movesinplans WHERE plan_id=:plan_id) AND m.id=mi.move_id"
+    result = db.session.execute(sql, {"plan_id":plan_id})
+    return result.fetchall()
+    

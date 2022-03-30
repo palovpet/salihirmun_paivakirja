@@ -6,18 +6,19 @@
 <br>
 Muokattava saliohjelma: {{ plan_name }}
 <br>
-Id: {{ plan_id }}
+{% for move in planinfo %}
+<b>{{ move[0] }}:</b> 
+{{ move[1] }} sarjaa, {{ move[2] }} toistoa, {{ move[3] }}kg
 <br>
+{% endfor %}
 
 <br>
-
+Valitse lisättävä liike:
 <select name="Valittavat liikkeet">
     {% for move in moves %}
     <option value= "{{ move.name }}""> {{ move.name }}</option>
     {% endfor %}
 </select>
-
-
 <br>
 
 {% endblock %}

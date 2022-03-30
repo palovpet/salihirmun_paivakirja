@@ -43,9 +43,9 @@ def signin():
 
 @app.route("/gymplan", methods=["GET", "POST"])
 def gymplan():
-    list = plans.get_list()
+    list_plans = plans.get_list()
     if request.method == "GET":
-        return render_template("gymplan.html", plans=list)
+        return render_template("gymplan.html", plans=list_plans)
     if request.method == "POST":
         name = request.form["name"]
         if plans.create_new_gymplan(name):
@@ -56,8 +56,9 @@ def gymplan():
 
 @app.route("/editplan", methods=["GET", "POST"])
 def edit_plan():
-    list = moves.get_moves()
+    list_moves = moves.get_moves()
     plan_name=request.form["plan_name"]
     plan_id = plans.get_id(plan_name)
-    return render_template("editplan.html", moves=list, plan_name=plan_name, plan_id=plan_id)
+    list_moves_in_plans = moves.show_plan(plan_id)
+    return render_template("editplan.html", moves=list_moves, plan_name=plan_name, plan_id=plan_id, planinfo=list_moves_in_plans)
 
