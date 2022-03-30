@@ -11,3 +11,8 @@ def show_plan(plan_id):
     result = db.session.execute(sql, {"plan_id":plan_id})
     return result.fetchall()
     
+def get_move_id(name):
+    sql = "SELECT id FROM moves WHERE name=:name"
+    result = db.session.execute(sql, {"name":name})
+    id = result.fetchone()[0]
+    return id

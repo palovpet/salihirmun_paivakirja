@@ -49,7 +49,7 @@ def gymplan():
     if request.method == "POST":
         name = request.form["name"]
         if plans.create_new_gymplan(name):
-            return redirect("/")
+            return redirect("/gymplan")
         else:
             return render_template("error.html",  message="Virhe uuden suunnitelman teossa")
 
@@ -62,3 +62,14 @@ def edit_plan():
     list_moves_in_plans = moves.show_plan(plan_id)
     return render_template("editplan.html", moves=list_moves, plan_name=plan_name, plan_id=plan_id, planinfo=list_moves_in_plans)
 
+@app.route("/addmove", methods=["POST"])
+def add_move_to_plan():
+    plan_id = request.form["plan_id"]
+    move_name = request.form["move_name"]
+    move_id = moves.get_move_id(move_name)
+    sets = request.form["sets"]
+    reps = request.form["reps"]
+    weights = 0
+    if plans.add_move(plan_id, move_id, sets, reps, weights):
+        print("onnistui")
+    return redirect("/editplan")

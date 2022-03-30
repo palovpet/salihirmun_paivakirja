@@ -23,3 +23,12 @@ def get_id(name):
     result = db.session.execute(sql, {"name":name})
     id = result.fetchone()[0]
     return id
+
+def add_move(plan_id, move_id, sets, reps, weights):
+    sql = "INSERT INTO moveinformations (move_id, sets, reps, weights) VALUES (:move_id, :sets, :reps, :weights) RETURNING id"
+    result = db.session.execute(sql, {"move_id":move_id, "sets":sets, "reps":reps, "weights":weights})
+    move_id = result.fetchone()[0]
+    sql2 = "INSERT INTO movesinplans (move_id, plan_id) VALUES (:move_id, :plan_id)"
+    db.session.execute(sql2, {"move_id":move_id, "plan_id":plan_id})
+    db.session.commit()
+    return True
