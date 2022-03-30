@@ -11,7 +11,6 @@ def login(username, password):
     else:
         if check_password_hash(user.password, password):
             session["user_id"] = user[0]
-            print(user[0])
             session["user_name"] = username
             return True
         else:

@@ -17,3 +17,9 @@ def get_list():
     sql = "SELECT name FROM gymplans WHERE owner_id=:owner_id ORDER BY name"
     result = db.session.execute(sql, {"owner_id":owner_id})
     return result.fetchall()
+
+def get_id(name):
+    sql = "SELECT id FROM gymplans WHERE name=:name"
+    result = db.session.execute(sql, {"name":name})
+    id = result.fetchone()[0]
+    return id

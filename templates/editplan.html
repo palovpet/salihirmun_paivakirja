@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block title %}Saliohjelman muokkaus{% endblock %}
+{% block content %}
+
+<br>
+Muokattava saliohjelma: {{ plan_name }}
+<br>
+Id: {{ plan_id }}
+<br>
+
+<br>
+
+<select name="Valittavat liikkeet">
+    {% for move in moves %}
+    <option value= "{{ move.name }}""> {{ move.name }}</option>
+    {% endfor %}
+</select>
+
+
+<br>
+
+{% endblock %}

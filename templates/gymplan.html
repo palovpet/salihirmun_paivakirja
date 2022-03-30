@@ -3,18 +3,25 @@
 {% block title %}Saliohjelmat{% endblock %}
 {% block content %}
 
-<select name="Saliohjelmasi">
+<h4>Muokkaa saliohjelmaa</h4>
+<form action="/editplan" method="POST">
+<label for="plan_name">Valitse treenisuunnitelma</label>
+<input name="plan_name" list="plan_name">
+<datalist id="plan_name">
     {% for plan in plans %}
-    <option value= "{{ plan[0] }}""> {{ plan[0]}}</option>
+    <option value={{plan[0]}}></option>
     {% endfor %}
+</datalist>
 
-</select>
+<a href="/editplan">
+  <input type="submit" value="Näytä ja muokkaa">
+</a>
+</form>
 
-<input type="submit" value="Näytä ja muokkaa">
 <br>
 <br>
 
-<h2>Luo uusi saliohjelma</h2>
+<h4>Luo uusi saliohjelma</h4>
 <form action="/gymplan" method="POST">
 Anna saliohjelman nimi: <input type"text" name="name">
 
