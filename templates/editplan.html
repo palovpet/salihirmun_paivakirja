@@ -3,23 +3,15 @@
 {% block title %}Saliohjelman muokkaus{% endblock %}
 {% block content %}
 <br>
-Muokattava saliohjelma: {{ plan_name }}
-<br>
-{% for move in planinfo %}
-<b>{{ move[0] }}:</b> 
-{{ move[1] }} sarjaa, {{ move[2] }} toistoa, {{ move[3] }}kg
-<br>
-{% endfor %}
-<br>
+<h4>Muokattava saliohjelma: {{ plan_name }}</h4>
 <br>
 <form action="/addmove" method="POST">
 <label for="move_name">Valitse lisättävä liike</label>
-<input name="move_name" list="move_name">
-<datalist id="move_name">
+<select name="move_name" id="move_name">
   {% for move in moves %}
   <option value= "{{ move.name }}""> {{ move.name }}</option>
   {% endfor %}
-</datalist>
+</select>
 <br>
 
 Sarjoja: <input type="number" name="sets">
@@ -31,6 +23,28 @@ Toistoja: <input type="number" name="reps">
 <input type="submit" value="Lisää liike">
 </a>
 </form>
+
+<ul>
+  {% for move in planinfo %}
+  <b>{{ move[0] }}:</b> 
+  {{ move[1] }} sarjaa, {{ move[2] }} toistoa, {{ move[3] }}kg
+  </a>
+  <br>
+  {% endfor %}
+</ul>
+<br>
+Poista liikkeitä:
+<form action="/deletemove" method="POST">
+<p>Minkä liikkeen haluat poistaa?</p>
+{% for move in planinfo %}
+<input type="radio" name="movetodelete" value="{{ move[0] }}"> {{ move[0]}}
+<input type="hidden" name="moveinformations_id" value="{{ move[4] }}">
+<br>
+{% endfor %}
+
+<input type="submit" value="Poista">
+</form>
+
 <a href="/">Palaa etusivulle</a>
 
 {% endblock %}

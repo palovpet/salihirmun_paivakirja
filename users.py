@@ -31,3 +31,9 @@ def signin(username, password):
 
 def user_id():
     return session.get("user_id",0)
+
+def get_count_plans():
+    owner_id = user_id()
+    sql = "SELECT COUNT(*) FROM gymplans WHERE owner_id=:owner_id"
+    result = db.session.execute(sql, {"owner_id":owner_id})
+    return result.fetchone()[0]

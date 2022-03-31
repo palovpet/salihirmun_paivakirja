@@ -31,7 +31,7 @@ def get_name(id):
     return name
 
 def get_moves_in_plan(plan_id):
-    sql = "SELECT m.name, mi.sets, mi.reps, mi.weights FROM moves m, moveinformations mi WHERE mi.id IN (SELECT id FROM movesinplans WHERE plan_id=:plan_id) AND m.id=mi.move_id"
+    sql = "SELECT m.name, mi.sets, mi.reps, mi.weights, mi.id FROM moves m, moveinformations mi WHERE mi.id IN (SELECT id FROM movesinplans WHERE plan_id=:plan_id AND visible=TRUE) AND m.id=mi.move_id"
     result = db.session.execute(sql, {"plan_id":plan_id})
     return result.fetchall()
 
@@ -43,3 +43,23 @@ def add_move(plan_id, move_id, sets, reps, weights):
     db.session.execute(sql2, {"move_id":move_id, "plan_id":plan_id})
     db.session.commit()
     return True
+
+def delete_move(move_id, move_name):
+    sql = "UPDATE movesinplans SET visible=FALSE WHERE move_id=:move_id"
+    db.session.execute(sql, {"move_id":move_id})
+    db.session.commit()
+    print(move_id)
+    print(move_name)
+    return True
+
+def get_plan_id_with_moveinfo_id(id):
+    sql = "SELECT plan_id FROM movesinplans WHERE id=:id"
+    result = db.session.execute(sql, {"id":id})
+    id = result.fetchone()[0]
+    return id
+
+#Todo laske alla olevalla ettei liikkeitä lisätä liikaa
+def get_count_moves(plan_id):
+    sql = "SELECT COUNT(*) FROM movesinplans WHERE plan_id=:plan_id"
+    result = db.session.execute(sql, {"plan_id":plan_id})
+    return result.fetchone()[0]
