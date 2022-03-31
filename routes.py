@@ -7,7 +7,7 @@ import moves
 
 @app.route("/")
 def index():
-    list_plans = plans.get_list()
+    list_plans = plans.list_all()
     return render_template("index.html", plans=list_plans)
 
 @app.route("/login", methods=["GET", "POST"])
@@ -42,23 +42,19 @@ def signin():
         else:
             return render_template("error.html", message="Virhe rekisteröitymisessä")
 
-@app.route("/gymplan", methods=["GET", "POST"])
-def gymplan():
-    list_plans = plans.get_list()
+@app.route("/addplan", methods=["GET", "POST"])
+def addplan():
+    list_plans = plans.list_all()
     if request.method == "GET":
         return render_template("index.html", plans=list_plans)
     if request.method == "POST":
         name = request.form["name"]
         count_plans = users.get_count_plans()
-        print(users.user_id())
-        print(count_plans)
         if int(count_plans) >= 5:
             return render_template("error.html", message="Sinulla on jo viisi suunnitelmaa, et saa luoda enempää")
-        if plans.create_new_gymplan(name):
-            return redirect("/gymplan")
-        else:
+        if not plans.add_new(name):
             return render_template("error.html",  message="Virhe uuden suunnitelman teossa")
-
+        return redirect("/addplan")          
 
 @app.route("/editplan", methods=["GET","POST"])
 def edit_plan():
@@ -66,27 +62,28 @@ def edit_plan():
         return render_template("editplan.html")
     if request.method == "POST":
         plan_name=request.form["plan_name"]
-        return render_template("editplan.html", moves=moves.get_moves(), plan_name=plan_name, plan_id=plans.get_id(plan_name), planinfo=plans.get_moves_in_plan(plans.get_id(plan_name)))
+        return render_template("editplan.html", moves=moves.list_all(), plan_name=plan_name, plan_id=plans.get_id(plan_name), planinfo=plans.get_moves(plans.get_id(plan_name)))
 
-@app.route("/addmove", methods=["POST", "GET"])
+@app.route("/addmove", methods=["POST"])
 def add_move_to_plan():
     plan_id = request.form["plan_id"]
-    if plans.get_count_moves(plan_id) >= 10:
+    if plans.count_moves(plan_id) >= 10:
         return render_template("error.html", message="Suunnitelmassa on jo kymmenen liikettä, et voi lisätä enempää")
     move_name = request.form["move_name"]
-    move_id = moves.get_move_id(move_name)
+    move_id = moves.get_id(move_name)
     sets = request.form["sets"]
     reps = request.form["reps"]
-    weights = 0
-    if not plans.add_move(plan_id, move_id, sets, reps, weights):
+    weight = 0
+    if not moves.accepted_values(sets, reps, weight):
+        return render_template("error.html", message="Syötit virheellisiä tietoja")
+    if not plans.add_move(plan_id, move_id, sets, reps, weight):
         return render_template("error.html", message="Virhe lisättäessä liikettä suunnitelmaan")  
-    print("liikkeitä on: " + str(plans.get_count_moves(plan_id)))
-    return render_template("editplan.html", moves=moves.get_moves(), plan_name=plans.get_name(plan_id), plan_id=plan_id, planinfo=plans.get_moves_in_plan(plan_id))
+    return render_template("editplan.html", moves=moves.list_all(), plan_name=plans.get_name(plan_id), plan_id=plan_id, planinfo=plans.get_moves(plan_id))
 
 @app.route("/deletemove", methods=["POST"])
 def delete_move_from_plan():
     moveinformations_id = request.form["moveinformations_id"]
-    plan_id = plans.get_plan_id_with_moveinfo_id(moveinformations_id)
+    plan_id = plans.get_id_with_moveinfo_id(moveinformations_id)
     if not plans.delete_move(moveinformations_id):
         return render_template("error.html", message="Virhe poistettaessa liikettä suunnitelmasta")
-    return render_template("editplan.html", moves=moves.get_moves(), plan_name=plans.get_name(plan_id), plan_id=plan_id, planinfo=plans.get_moves_in_plan(plan_id))
+    return render_template("editplan.html", moves=moves.list_all(), plan_name=plans.get_name(plan_id), plan_id=plan_id, planinfo=plans.get_moves(plan_id))
