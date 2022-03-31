@@ -7,12 +7,13 @@ import moves
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    list_plans = plans.get_list()
+    return render_template("index.html", plans=list_plans)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "GET":
-        return render_template("login.html")
+        return render_template("index.html")
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
@@ -45,7 +46,7 @@ def signin():
 def gymplan():
     list_plans = plans.get_list()
     if request.method == "GET":
-        return render_template("gymplan.html", plans=list_plans)
+        return render_template("index.html", plans=list_plans)
     if request.method == "POST":
         name = request.form["name"]
         count_plans = users.get_count_plans()

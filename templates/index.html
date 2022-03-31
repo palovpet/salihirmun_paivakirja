@@ -3,11 +3,52 @@
 {% block content %}
 
 {% if session.user_id %}
-<p>Sisäänkirjautunut salihirmu: {{ session.user_name }}</p>
-<a href="/gymplan">Saliohjelmat</a>
+
+Sisäänkirjautunut salihirmu: <i>{{ session.user_name }}</i>
+
+{% if plans %}
+
+<h4>Muokkaa saliohjelmaa</h4>
+<form action="/editplan" method="POST">
+<label for="plan_name">Valitse muokattava saliohjelma</label>
+<select name="plan_name" id="plan_name">
+    {% for plan in plans %}
+    <option value= "{{ plan.name }}""> {{ plan.name }}</option>
+    {% endfor %}
+</select>
+<a href="/editplan">
+  <input type="submit" value="Näytä ja muokkaa">
+</a>
+</form>
+<br>
+
+{% endif %}
+
+<h4>Luo uusi saliohjelma</h4>
+<form action="/gymplan" method="POST">
+Anna saliohjelman nimi: <input type"text" name="name">
+<input type="submit" value="Tallenna">
+</form>
+<br>
+
 <a href="/logout">Kirjaudu ulos</a>
+
+
 {% else %}
-Et ole kirjautunut sisään. <a href="/login">Kirjaudu sisään</a>
+
+Kirjaudu sisään
+<br>
+<form action="/login" method="post">
+Tunnus: <input type="text" name="username">
+<p>
+Salasana: <input type="password" name="password">
+<p>
+<input type="submit" value="Kirjaudu">
+</form>
+<br>
+
+Tarvittaessa luo uusi tunnus <a href="/signin">tästä</a>
+
 {% endif %}
 
 {% endblock %}
