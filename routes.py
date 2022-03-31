@@ -51,8 +51,8 @@ def gymplan():
         count_plans = users.get_count_plans()
         print(users.user_id())
         print(count_plans)
-        if int(count_plans) > 10:
-            return render_template("error.html", message="Sinulla on jo kymmenen suunnitelmaa, et saa luoda enempää")
+        if int(count_plans) >= 5:
+            return render_template("error.html", message="Sinulla on jo viisi suunnitelmaa, et saa luoda enempää")
         if plans.create_new_gymplan(name):
             return redirect("/gymplan")
         else:
@@ -70,20 +70,22 @@ def edit_plan():
 @app.route("/addmove", methods=["POST", "GET"])
 def add_move_to_plan():
     plan_id = request.form["plan_id"]
+    if plans.get_count_moves(plan_id) >= 10:
+        return render_template("error.html", message="Suunnitelmassa on jo kymmenen liikettä, et voi lisätä enempää")
     move_name = request.form["move_name"]
     move_id = moves.get_move_id(move_name)
     sets = request.form["sets"]
     reps = request.form["reps"]
     weights = 0
     if not plans.add_move(plan_id, move_id, sets, reps, weights):
-        return render_template("error.html", message="Virhe lisättäessä liikettä suunnitelmaan")
+        return render_template("error.html", message="Virhe lisättäessä liikettä suunnitelmaan")  
+    print("liikkeitä on: " + str(plans.get_count_moves(plan_id)))
     return render_template("editplan.html", moves=moves.get_moves(), plan_name=plans.get_name(plan_id), plan_id=plan_id, planinfo=plans.get_moves_in_plan(plan_id))
 
 @app.route("/deletemove", methods=["POST"])
 def delete_move_from_plan():
-    move_name = request.form["movetodelete"]
     moveinformations_id = request.form["moveinformations_id"]
     plan_id = plans.get_plan_id_with_moveinfo_id(moveinformations_id)
-    if not plans.delete_move(moveinformations_id, move_name):
+    if not plans.delete_move(moveinformations_id):
         return render_template("error.html", message="Virhe poistettaessa liikettä suunnitelmasta")
     return render_template("editplan.html", moves=moves.get_moves(), plan_name=plans.get_name(plan_id), plan_id=plan_id, planinfo=plans.get_moves_in_plan(plan_id))

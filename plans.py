@@ -44,12 +44,10 @@ def add_move(plan_id, move_id, sets, reps, weights):
     db.session.commit()
     return True
 
-def delete_move(move_id, move_name):
+def delete_move(move_id):
     sql = "UPDATE movesinplans SET visible=FALSE WHERE move_id=:move_id"
     db.session.execute(sql, {"move_id":move_id})
     db.session.commit()
-    print(move_id)
-    print(move_name)
     return True
 
 def get_plan_id_with_moveinfo_id(id):
@@ -58,8 +56,7 @@ def get_plan_id_with_moveinfo_id(id):
     id = result.fetchone()[0]
     return id
 
-#Todo laske alla olevalla ettei liikkeitä lisätä liikaa
 def get_count_moves(plan_id):
-    sql = "SELECT COUNT(*) FROM movesinplans WHERE plan_id=:plan_id"
+    sql = "SELECT COUNT(*) FROM movesinplans WHERE plan_id=:plan_id AND visible=TRUE"
     result = db.session.execute(sql, {"plan_id":plan_id})
     return result.fetchone()[0]
