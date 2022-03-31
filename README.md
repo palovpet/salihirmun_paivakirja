@@ -1,16 +1,25 @@
 ## Salihirmun päiväkirja
 Sovelluksella kirjataan kuntosalitreenin sarjapainoja ja treenikertoja. Omia treenejä ja tilastoja voi katsella, ja vertailla omia tuloksia muiden käyttäjien tuloksiin. Sovellus optimoidaan käytettäväksi puhelimella.
 
-### Toimintojen määrittelyt
+### Välipalautukseen 2 valmistuneet toiminnallisuudet:
 
-Käyttäjä voi kirjautua sovellukseen käyttäen käyttäjätunnusta ja pin-koodia. Tarvittavat toiminnot:
-- Käyttäjä kirjautuu syöttämällä käyttäjätunnuksen ja salasanan
-- Uuden käyttäjätunnuksen voi luoda, jolloin tarkistetaan ettei samannimistä käyttäjää ole jo
+Käyttäjä voi kirjautua sovellukseen käyttäen käyttäjätunnusta ja salasanaa.
+- Uusi käyttäjätunnus voidaan luoda ja salasana valita. Käyttäjätunnukseksi ei hyväksytä nimimerkkiä joka on jo käytössä, lisäksi salasana on syötettävä kaksi kertaa ja niiden on oltava samat
+- Käyttäjä voi kirjautua sovellukseen käyttäen luomiaan tunnuksia
+- Käyttäjä voi kirjautua ulos
 
-Käyttäjä voi luoda max 5 pohjaa kuntosalitreenille. Treenipohjalla on:
-- Nimi
-- 1-10 liikettä, jotka valitaan listasta
-- Jokaisella liikkeellä on toistomäärä ja sarjamäärä
+Käyttäjä voi luoda max 5 pohjaa kuntosalitreenille. 
+- Käyttäjä voi luoda uuden saliohjelman ja muokata aiemmin luomiaan.
+    - Etusivulla on lista käyttäjän saliohjelmista, jos niitä ei ole, on näkyvillä kenttä johon lisätään ensimmäisen saliohjelman nimi
+    - Kun saliohjelmia on useampi, valitaan alasvetovalikosta ohjelma jota halutaan muokata, ja napsautetaan Näytä ja muokkaa
+- Saliohjelmia sallitaan max 5 per käyttäjä
+- Saliohjelman muokkaustilassa lisätään liikkeitä valitsemalla liike alasvetovalikosta ja antamalla sarjojen ja toistojen lukumäärä
+- Saliohjelman liikkeet -osiossa näkyy suunnitelmassa olevat liikkeet, sarjat ja toistot
+- Saliohjelmasta voi poistaa liikkeen napsauttamalla Saliohjelman liikkeet -osiossa Ppoista-painiketta kyseisen likkeen kohdalla
+- Yhteen saliohjelmaan sallitaan max 10 liikettä
+- Ohjelman keskeneräisyyden vuoksi liikkeitä on valittavissa vasta kolme, ja sarjapainot on aina 0 kg.
+
+### Keskeneräiset toiminnallisuudet:
 
 Käyttäjä voi kirjata kuntosalitseenin. Saatavilla olevat toiminnot on:
 - Kirjataan päivämäärä
