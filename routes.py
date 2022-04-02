@@ -87,3 +87,24 @@ def delete_move_from_plan():
     if not plans.delete_move(moveinformations_id):
         return render_template("error.html", message="Virhe poistettaessa liikettä suunnitelmasta")
     return render_template("editplan.html", moves=moves.list_all(), plan_name=plans.get_name(plan_id), plan_id=plan_id, planinfo=plans.get_moves(plan_id))
+
+@app.route("/opengymplan", methods=["POST", "GET"])
+def document_gymvisit():
+    if request.method == "GET":
+        return render_template("document.html")
+    if request.method == "POST":
+        plan_name=request.form["plan_name"]
+        date=request.form["date"]
+        plan_id=plans.get_id(plan_name)
+        return render_template("/document.html", date=date, plan_name=plan_name, planinfo=plans.get_moves(plan_id))
+
+@app.route("/documentmove", methods=["GET","POST"])
+def document_move():
+    weight=request.form["weight"] 
+    moveinformations_id=request.form["moveinformations_id"]
+    plan_name=request.form["plan_name"]
+    plan_id=plans.get_id(plan_name)
+    if not moves.document(weight, moveinformations_id):
+        return render_template("error.html", "Virhe kirjattaessa treeniä")
+    return render_template("/document.html", plan_name=plan_name, planinfo=plans.get_moves(plan_id))
+    

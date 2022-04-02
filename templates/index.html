@@ -8,6 +8,22 @@ Sisäänkirjautunut salihirmu: <i>{{ session.user_name }}</i>
 
 {% if plans %}
 
+<h4>Kirjaa treeni</h4>
+<form action="/opengymplan" method="POST">
+  <label for="plan_name">Valitse saliohjelma</label>
+  <select name="plan_name" id="plan_name">
+    {% for plan in plans %}
+    <option value= "{{ plan.name }}"> {{ plan.name }}</option>
+    {% endfor %}
+  </select>
+  <label for="date"> ja treenipäivä </label>
+  <input type="date" name="date">
+  <a href="/document">
+    <input type="submit" value="Siirry kirjaukseen">
+  </a>
+</form>
+<br>
+
 <h4>Muokkaa saliohjelmaa</h4>
 <form action="/editplan" method="POST">
 <label for="plan_name">Valitse muokattava saliohjelma</label>
@@ -26,7 +42,7 @@ Sisäänkirjautunut salihirmu: <i>{{ session.user_name }}</i>
 
 <h4>Luo uusi saliohjelma</h4>
 <form action="/addplan" method="POST">
-Anna saliohjelman nimi: <input type"text" name="name">
+Anna saliohjelman nimi: <input type="text" name="name">
 <input type="submit" value="Tallenna">
 </form>
 <br>

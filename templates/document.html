@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block content %}
+
+Valittu saliohjelma: <i>{{ plan_name }}</i> <input type="hidden" name="plan_id" value="{{ plan_name }}">
+<br>
+
+<h4>Saliohjelman liikkeet</h4>
+{% for move in planinfo %}
+<form action="/documentmove" method="POST">
+<b>{{ move[0] }}:</b> 
+{{ move[1] }} sarjaa, {{ move[2] }} toistoa, <input type="number" name="weight"> kg  <input type="submit" name="movetodocument" value="Kirjaa">
+<br><br>
+<input type="hidden" name="moveinformations_id" value="{{ move[4] }}">
+<br>
+<input type="hidden" name="plan_name" value="{{ plan_name }}">
+<br>
+</form>
+{% endfor %}
+<br>
+<br>
+<br>
+
+
+
+<a href="/">Palaa etusivulle</a>
+
+{% endblock %}

@@ -28,15 +28,15 @@ Toistoja: <input type="number" name="reps">
 
 <br>
 <h4>Saliohjelman liikkeet</h4>
-<form action="/deletemove" method="POST">
 {% for move in planinfo %}
+<form action="/deletemove" method="POST">
 <b>{{ move[0] }}:</b> 
-{{ move[1] }} sarjaa, {{ move[2] }} toistoa, {{ move[3] }}kg   <input type="submit" name="movetodelete" value="Poista liike">
+{{ move[1] }} sarjaa, {{ move[2] }} toistoa  <input type="submit" name="movetodelete" value="Poista liike"><br><br>
 <input type="hidden" name="moveinformations_id" value="{{ move[4] }}">
 <br>
+</form>
 {% endfor %}
 <br>
-</form>
 
 {% endif %}
 
