@@ -29,3 +29,9 @@ CREATE TABLE movesinplans (
     plan_id INTEGER REFERENCES gymplans,
     visible BOOLEAN DEFAULT TRUE
 );
+
+INSERT INTO moves (name) VALUES ('Kyykky');
+INSERT INTO moves (name) VALUES ('Penkkipunnerrus');
+INSERT INTO moves (name) VALUES ('Maastaveto');
+
+
