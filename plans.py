@@ -37,7 +37,7 @@ def get_name(id):
     return name
 
 def get_moves(plan_id):
-    sql = "SELECT m.name, mi.sets, mi.reps, mi.weights, mi.id FROM moves m, moveinformations mi WHERE mi.id IN (SELECT id FROM movesinplans WHERE plan_id=:plan_id AND visible=TRUE) AND m.id=mi.move_id"
+    sql = "SELECT m.name, mi.sets, mi.reps, mi.weights, mi.id FROM moves m, moveinformations mi WHERE mi.id IN (SELECT move_id FROM movesinplans WHERE plan_id=:plan_id AND visible=TRUE) AND m.id=mi.move_id"
     result = db.session.execute(sql, {"plan_id":plan_id})
     return result.fetchall()
 

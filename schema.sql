@@ -26,6 +26,7 @@ CREATE TABLE moveinformations (
 
 CREATE TABLE movesinplans (
     id SERIAL PRIMARY KEY,
+	move_id INTEGER REFERENCES moves,
     plan_id INTEGER REFERENCES gymplans,
     visible BOOLEAN DEFAULT TRUE
 );
