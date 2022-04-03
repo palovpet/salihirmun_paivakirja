@@ -19,14 +19,15 @@ def list_all():
     return result.fetchall()
 
 def get_id(name):
-    sql = "SELECT id FROM gymplans WHERE name=:name"
-    result = db.session.execute(sql, {"name":name})
+    owner_id = users.user_id()
+    sql = "SELECT id FROM gymplans WHERE name=:name AND owner_id=:owner_id"
+    result = db.session.execute(sql, {"name":name, "owner_id":owner_id})
     id = result.fetchone()[0]
     return id
 
-def get_id_with_moveinfo_id(m_id):
-    sql = "SELECT plan_id FROM movesinplans WHERE id=:id"
-    result = db.session.execute(sql, {"id":m_id})
+def get_id_with_moveinfo_id(move_id):
+    sql = "SELECT plan_id FROM movesinplans WHERE move_id=:move_id"
+    result = db.session.execute(sql, {"move_id":move_id})
     m_id = result.fetchone()[0]
     return m_id
 
