@@ -1,8 +1,11 @@
 {% extends "layout.html" %}
 {% block content %}
 
-Valittu saliohjelma: <i>{{ plan_name }}</i> <input type="hidden" name="plan_id" value="{{ plan_name }}">
+Valittu saliohjelma: <i>{{ plan_name }}</i> 
 <br>
+Pvm: {{ date }}
+<br>
+
 
 <h4>Saliohjelman liikkeet</h4>
 {% for move in planinfo %}
@@ -13,6 +16,7 @@ Valittu saliohjelma: <i>{{ plan_name }}</i> <input type="hidden" name="plan_id" 
 <input type="hidden" name="moveinformations_id" value="{{ move[4] }}">
 <br>
 <input type="hidden" name="plan_name" value="{{ plan_name }}">
+<input type="hidden" name="date" value="{{ date }}"
 <br>
 </form>
 {% endfor %}

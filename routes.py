@@ -62,13 +62,11 @@ def edit_plan():
         return render_template("editplan.html")
     if request.method == "POST":
         plan_name=request.form["plan_name"]
-        print(plan_name)
         return render_template("editplan.html", moves=moves.list_all(), plan_name=plan_name, plan_id=plans.get_id(plan_name), planinfo=plans.get_moves(plans.get_id(plan_name)))
 
 @app.route("/addmove", methods=["POST"])
 def add_move_to_plan():
     plan_id = request.form["plan_id"]
-    #print(str(plan_id))
     if plans.count_moves(plan_id) >= 10:
         return render_template("error.html", message="Suunnitelmassa on jo kymmenen liikettä, et voi lisätä enempää")
     move_name = request.form["move_name"]
@@ -105,8 +103,9 @@ def document_move():
     weight=request.form["weight"] 
     moveinformations_id=request.form["moveinformations_id"]
     plan_name=request.form["plan_name"]
+    date=request.form["date"]
     plan_id=plans.get_id(plan_name)
-    if not moves.document(weight, moveinformations_id):
+    if not moves.document_moveinformation(weight, moveinformations_id, plan_id, date):
         return render_template("error.html", "Virhe kirjattaessa treeniä")
-    return render_template("/document.html", plan_name=plan_name, planinfo=plans.get_moves(plan_id))
+    return render_template("/document.html", date=date, plan_name=plan_name, planinfo=plans.get_moves(plan_id))
     

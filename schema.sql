@@ -31,6 +31,13 @@ CREATE TABLE movesinplans (
     visible BOOLEAN DEFAULT TRUE
 );
 
+CREATE TABLE movesdone ( 
+    id SERIAL PRIMARY KEY,
+	move_id INTEGER REFERENCES moveinformations,
+	plan_id INTEGER REFERENCES gymplans,
+	day DATE
+);
+
 INSERT INTO moves (name) VALUES ('Kyykky');
 INSERT INTO moves (name) VALUES ('Penkkipunnerrus');
 INSERT INTO moves (name) VALUES ('Maastaveto');
