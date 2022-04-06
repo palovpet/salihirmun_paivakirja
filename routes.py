@@ -108,4 +108,7 @@ def document_move():
     if not moves.document_moveinformation(weight, moveinformations_id, plan_id, date):
         return render_template("error.html", "Virhe kirjattaessa treeniä")
     return render_template("/document.html", date=date, plan_name=plan_name, planinfo=plans.get_moves(plan_id))
-    
+
+@app.route("/statistics", methods=["GET", "POST"])
+def statistics():
+    return render_template("statistics.html")

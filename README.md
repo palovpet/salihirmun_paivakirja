@@ -24,16 +24,12 @@ Käyttäjä voi luoda max 5 pohjaa kuntosalitreenille:
 
 Käyttäjä voi kirjata kuntosalitreenin:
 - Kirjataan päivämäärä
-- Jokaisen liikkeen kohdalla kirjataan sarjapainot.
-
-Huom! Kuntosalitreenin kirjauksen tallennustoiminnallisuutta ei ole vielä toteutettu, mutta visuaalisia elementtejä on jo laitettu paikoilleen. Kirjaa-painikkeen painaminen ei siis vielä tee mitään.
+- Jokaisen liikkeen kohdalla kirjataan sarjapainot
 
 
 ### Keskeneräiset toiminnallisuudet:
 
 Kuntosalitreenin kirjauksen loput toiminnallisuudet:
-- Sarjapainojen tallennus
-- Kuntosalikerran tallennus (pvm + mikä saliohjelma)
 - Jokaisen liikkeen kohdalla oletuksena liikkeen sarjapainoksi tarjotaan edellisellä kerralla kirjattua, mutta sitä voi muokata
 
 
