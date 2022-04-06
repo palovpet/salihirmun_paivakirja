@@ -3,6 +3,7 @@ Sovelluksella kirjataan kuntosalitreenin sarjapainoja ja treenikertoja. Omia tre
 
 
 ### Välipalautukseen 2 valmistuneet toiminnallisuudet:
+Alla on kuvattu tässä vaiheessa valmistuneet toiminnallisuudet, joita voi myös testata [herokussa](https://salihirmun-paivakirja.herokuapp.com/).
 
 Käyttäjä voi kirjautua sovellukseen käyttäen käyttäjätunnusta ja salasanaa:
 - Uusi käyttäjätunnus voidaan luoda ja salasana valita. Käyttäjätunnukseksi ei hyväksytä nimimerkkiä joka on jo käytössä, lisäksi salasana on syötettävä kaksi kertaa ja niiden on oltava samat
@@ -11,7 +12,7 @@ Käyttäjä voi kirjautua sovellukseen käyttäen käyttäjätunnusta ja salasan
 
 
 Käyttäjä voi luoda max 5 pohjaa kuntosalitreenille:
-- Käyttäjä voi luoda uuden saliohjelman ja muokata aiemmin luomiaan.
+- Käyttäjä voi luoda uuden saliohjelman ja muokata aiemmin luomiaan
     - Etusivulla on lista käyttäjän saliohjelmista, jos niitä ei ole, on näkyvillä kenttä johon lisätään ensimmäisen saliohjelman nimi
     - Kun saliohjelmia on useampi, valitaan alasvetovalikosta ohjelma jota halutaan muokata, ja napsautetaan Näytä ja muokkaa
 - Saliohjelmia sallitaan max 5 per käyttäjä
@@ -26,10 +27,14 @@ Käyttäjä voi kirjata kuntosalitreenin:
 - Kirjataan päivämäärä
 - Jokaisen liikkeen kohdalla kirjataan sarjapainot
 
+Huom! Kuntosalitreenin kirjauksen tallennustoiminnallisuutta ei ole vielä toteutettu, mutta visuaalisia elementtejä on jo laitettu paikoilleen. Kirjaa-painikkeen painaminen ei siis vielä tee mitään.
+
 
 ### Keskeneräiset toiminnallisuudet:
 
 Kuntosalitreenin kirjauksen loput toiminnallisuudet:
+- Sarjapainojen tallennus
+- Kuntosalikerran tallennus (pvm + mikä saliohjelma)
 - Jokaisen liikkeen kohdalla oletuksena liikkeen sarjapainoksi tarjotaan edellisellä kerralla kirjattua, mutta sitä voi muokata
 
 
