@@ -1,7 +1,21 @@
 {% extends "layout.html" %}
 {% block content %}
 
-Tänne tilastot
+Saliohjelma: <i>{{ plan_name }}</i> 
+
+<h4>Saliohjelman liikkeet</h4>
+{% for stat in stats %}
+<b>{{ stat[0] }}:</b> {{ stat[1] }} sarjaa {{ stat[2] }} toistoa <br>
+{{ stat[4] }} :  {{ stat[3] }}  kg
+<br>
+
+
+
+<br>
+{% endfor %}
+<br>
+
+
 <br>
 <br>
 <a href="/">Palaa etusivulle</a>

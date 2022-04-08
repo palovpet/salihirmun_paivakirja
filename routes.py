@@ -52,6 +52,10 @@ def addplan():
         count_plans = users.get_count_plans()
         if int(count_plans) >= 5:
             return render_template("error.html", message="Sinulla on jo viisi suunnitelmaa, et saa luoda enempää")
+        if name == "":
+            return render_template("error.html", message="Saliohjelman nimi ei voi olla tyhjä")
+        if plans.validate_name(name) == False:
+            return render_template("error.html", message="Sinulla on jo tämän niminen saliohjelma")
         if not plans.add_new(name):
             return render_template("error.html",  message="Virhe uuden suunnitelman teossa")
         return redirect("/addplan")          
@@ -73,6 +77,8 @@ def add_move_to_plan():
     move_id = moves.get_id(move_name)
     sets = request.form["sets"]
     reps = request.form["reps"]
+    if not moves.validate_sets_reps(sets, reps):
+        return render_template("error.html", message="Syötit virheellisiä lukuja sarjoihin tai toistoihin, molempien on olatava vähintään 1")
     weight = 0
     if not moves.accepted_values(sets, reps, weight):
         return render_template("error.html", message="Syötit virheellisiä tietoja")
@@ -96,6 +102,8 @@ def document_gymvisit():
         plan_name=request.form["plan_name"]
         date=request.form["date"]
         plan_id=plans.get_id(plan_name)
+        if date == "":
+            return render_template("error.html", message="Et valinnut päivämäärää, jolle kirjaat salikäyntiä")
         return render_template("/document.html", date=date, plan_name=plan_name, planinfo=plans.get_moves(plan_id))
 
 @app.route("/documentmove", methods=["GET","POST"])
@@ -105,10 +113,15 @@ def document_move():
     plan_name=request.form["plan_name"]
     date=request.form["date"]
     plan_id=plans.get_id(plan_name)
+    if not moves.validate_weight(weight):
+        return render_template("error.html", message="Paino ei voi olla negatiivinen")
     if not moves.document_moveinformation(weight, moveinformations_id, plan_id, date):
         return render_template("error.html", "Virhe kirjattaessa treeniä")
     return render_template("/document.html", date=date, plan_name=plan_name, planinfo=plans.get_moves(plan_id))
 
-@app.route("/statistics", methods=["GET", "POST"])
+@app.route("/statistics", methods=["POST"])
 def statistics():
-    return render_template("statistics.html")
+    plan_name = request.form["plan_name"]
+    plan_id = plans.get_id(plan_name)
+    stats = moves.move_stats(plan_id)
+    return render_template("statistics.html", plan_name=plan_name, planinfo=plans.get_moves(plan_id), stats=stats)

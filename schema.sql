@@ -42,4 +42,3 @@ INSERT INTO moves (name) VALUES ('Kyykky');
 INSERT INTO moves (name) VALUES ('Penkkipunnerrus');
 INSERT INTO moves (name) VALUES ('Maastaveto');
 
-

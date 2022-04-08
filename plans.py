@@ -2,6 +2,15 @@ from db import db
 import users
 from flask import session
 
+def validate_name(name):
+    plans = list_all()
+    for plan in plans:
+       # DOES NOT WORK     
+        if plan == name:
+            return False
+    else:
+         return True    
+
 def add_new(name):
     owner_id = users.user_id()
     try:
@@ -61,3 +70,4 @@ def count_moves(plan_id):
     sql = "SELECT COUNT(*) FROM movesinplans WHERE plan_id=:plan_id AND visible=TRUE"
     result = db.session.execute(sql, {"plan_id":plan_id})
     return result.fetchone()[0]
+
