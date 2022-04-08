@@ -4,6 +4,7 @@ from flask import render_template, request, redirect
 import users
 import plans
 import moves
+import stats
 
 @app.route("/")
 def index():
@@ -54,7 +55,7 @@ def addplan():
             return render_template("error.html", message="Sinulla on jo viisi suunnitelmaa, et saa luoda enempää")
         if name == "":
             return render_template("error.html", message="Saliohjelman nimi ei voi olla tyhjä")
-        if plans.validate_name(name) == False:
+        if not plans.validate_name(name):
             return render_template("error.html", message="Sinulla on jo tämän niminen saliohjelma")
         if not plans.add_new(name):
             return render_template("error.html",  message="Virhe uuden suunnitelman teossa")
@@ -120,8 +121,11 @@ def document_move():
     return render_template("/document.html", date=date, plan_name=plan_name, planinfo=plans.get_moves(plan_id))
 
 @app.route("/statistics", methods=["POST"])
-def statistics():
+def statistics_per_plan():
     plan_name = request.form["plan_name"]
     plan_id = plans.get_id(plan_name)
-    stats = moves.move_stats(plan_id)
-    return render_template("statistics.html", plan_name=plan_name, planinfo=plans.get_moves(plan_id), stats=stats)
+    stats_all = stats.move_stats(plan_id)
+    count_workouts = stats.gymvisits_one(plan_id)
+    first_time = stats.first_time_one(plan_id)
+    last_time = stats.last_time_one(plan_id)
+    return render_template("statistics.html", plan_name=plan_name, planinfo=plans.get_moves(plan_id), stats_all=stats_all, count_workouts=count_workouts, first_time=first_time, last_time=last_time)

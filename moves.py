@@ -54,8 +54,3 @@ def document_movedone(move_id, plan_id, day):
     db.session.execute(sql, {"move_id":move_id, "plan_id":plan_id, "day":day})
     db.session.commit()
     return True
-
-def move_stats(plan_id):
-    sql = "SELECT m.name, mi.sets, mi.reps, mi.weights, d.day FROM moves m, moveinformations mi, movesdone d WHERE mi.id IN (SELECT move_id FROM movesdone WHERE plan_id=:plan_id) AND m.id=mi.move_id AND d.move_id=mi.id ORDER BY m.name" 
-    result = db.session.execute(sql, {"plan_id":plan_id})
-    return result.fetchall()

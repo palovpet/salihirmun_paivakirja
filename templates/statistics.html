@@ -2,14 +2,15 @@
 {% block content %}
 
 Saliohjelma: <i>{{ plan_name }}</i> 
+<br><br>
+Olet tehnyt tämän saliohjelman <b>{{ count_workouts }}</b> kertaa. Ensimmäistä kertaa <b>{{ first_time  }}</b>, ja viimeksi <b>{{ last_time }}</b>
+<br><br>
 
 <h4>Saliohjelman liikkeet</h4>
-{% for stat in stats %}
+{% for stat in stats_all %}
 <b>{{ stat[0] }}:</b> {{ stat[1] }} sarjaa {{ stat[2] }} toistoa <br>
 {{ stat[4] }} :  {{ stat[3] }}  kg
 <br>
-
-
 
 <br>
 {% endfor %}

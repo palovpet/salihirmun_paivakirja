@@ -5,8 +5,8 @@ from flask import session
 def validate_name(name):
     plans = list_all()
     for plan in plans:
-       # DOES NOT WORK     
-        if plan == name:
+        plan_trimmed = str(plan).strip(",(')")    
+        if plan_trimmed == name:
             return False
     else:
          return True    
