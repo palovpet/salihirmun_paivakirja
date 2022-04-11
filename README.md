@@ -2,13 +2,11 @@
 Sovelluksella kirjataan kuntosalitreenin sarjapainoja ja treenikertoja. Omia treenejä ja tilastoja voi katsella, ja vertailla omia tuloksia muiden käyttäjien tuloksiin. Sovellus optimoidaan käytettäväksi puhelimella.
 
 
-### Välipalautukseen 2 valmistuneet toiminnallisuudet:
+### Välipalautukseen 3 valmistuneet toiminnallisuudet:
 Alla on kuvattu tässä vaiheessa valmistuneet toiminnallisuudet, joita voi myös testata [herokussa](https://salihirmun-paivakirja.herokuapp.com/).
 
 Käyttäjä voi kirjautua sovellukseen käyttäen käyttäjätunnusta ja salasanaa:
 - Uusi käyttäjätunnus voidaan luoda ja salasana valita. Käyttäjätunnukseksi ei hyväksytä nimimerkkiä joka on jo käytössä, lisäksi salasana on syötettävä kaksi kertaa ja niiden on oltava samat
-- Käyttäjä voi kirjautua sovellukseen käyttäen luomiaan tunnuksia
-- Käyttäjä voi kirjautua ulos
 
 
 Käyttäjä voi luoda max 5 pohjaa kuntosalitreenille:
@@ -20,21 +18,18 @@ Käyttäjä voi luoda max 5 pohjaa kuntosalitreenille:
 - Saliohjelman liikkeet -osiossa näkyy suunnitelmassa olevat liikkeet, sarjat ja toistot
 - Saliohjelmasta voi poistaa liikkeen napsauttamalla Saliohjelman liikkeet -osiossa Poista liike -painiketta kyseisen likkeen kohdalla
 - Yhteen saliohjelmaan sallitaan max 10 liikettä
-- Ohjelman keskeneräisyyden vuoksi liikkeitä on valittavissa vasta kolme, näitä tullaan lisäämään
+Ohjelman keskeneräisyyden vuoksi liikkeitä on valittavissa vasta kolme, näitä tullaan lisäämään
 
 
 Käyttäjä voi kirjata kuntosalitreenin:
-- Kirjataan päivämäärä
+- Kirjataan päivämäärä ja mikä saliohjelma on suoritettu
 - Jokaisen liikkeen kohdalla kirjataan sarjapainot
-
-Huom! Kuntosalitreenin kirjauksen tallennustoiminnallisuutta ei ole vielä toteutettu, mutta visuaalisia elementtejä on jo laitettu paikoilleen. Kirjaa-painikkeen painaminen ei siis vielä tee mitään.
 
 
 ### Keskeneräiset toiminnallisuudet:
 
 Kuntosalitreenin kirjauksen loput toiminnallisuudet:
-- Sarjapainojen tallennus
-- Kuntosalikerran tallennus (pvm + mikä saliohjelma)
+
 - Jokaisen liikkeen kohdalla oletuksena liikkeen sarjapainoksi tarjotaan edellisellä kerralla kirjattua, mutta sitä voi muokata
 
 
