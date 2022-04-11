@@ -5,7 +5,14 @@ def list_all():
     sql = "SELECT name FROM moves"
     result = db.session.execute(sql)
     return result.fetchall()
-    
+
+def count_available_moves():
+    sql = "SELECT COUNT(*) FROM moves"
+    result = db.session.execute(sql)
+    count = result.fetchone()
+    count_trim = str(count).strip("(,)")
+    return count_trim
+
 def get_id(name):
     sql = "SELECT id FROM moves WHERE name=:name"
     result = db.session.execute(sql, {"name":name})

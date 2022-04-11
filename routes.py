@@ -78,6 +78,8 @@ def add_move_to_plan():
     move_id = moves.get_id(move_name)
     sets = request.form["sets"]
     reps = request.form["reps"]
+    if not plans.move_already_in_plan(plan_id, move_id):
+        return render_template("error.html", message="Tämä liike on jo tässä saliohjelmassa")
     if not moves.validate_sets_reps(sets, reps):
         return render_template("error.html", message="Syötit virheellisiä lukuja sarjoihin tai toistoihin, molempien on olatava vähintään 1")
     weight = 0

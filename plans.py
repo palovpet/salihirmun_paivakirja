@@ -60,6 +60,16 @@ def add_move(plan_id, move_id, sets, reps, weights):
     db.session.commit()
     return True
 
+def move_already_in_plan(plan_id, move_id):
+    sql = "SELECT COUNT(mi.move_id) FROM moveinformations mi, movesinplans mp WHERE mi.id=mp.move_id AND mp.plan_id=:plan_id AND mi.move_id=:move_id AND mp.visible=TRUE"
+    result = db.session.execute(sql, {"plan_id":plan_id, "move_id":move_id})
+    count = result.fetchone()
+    count_trim = str(count).strip("(,)")
+    if int(count_trim) > 0:
+        return False
+    else:
+        return True
+
 def delete_move(move_id):
     sql = "UPDATE movesinplans SET visible=FALSE WHERE move_id=:move_id"
     db.session.execute(sql, {"move_id":move_id})

@@ -1,12 +1,35 @@
+from sqlalchemy import null
 from db import db
 from flask import session
-import users
-import datetime
 
 def move_stats(plan_id):
-    sql = "SELECT m.name, mi.sets, mi.reps, mi.weights, d.day FROM moves m, moveinformations mi, movesdone d WHERE mi.id IN (SELECT move_id FROM movesdone WHERE plan_id=:plan_id) AND m.id=mi.move_id AND d.move_id=mi.id ORDER BY m.name" 
+    sql = "SELECT m.name, mi.sets, mi.reps, mi.weights, d.day, m.id FROM moves m, moveinformations mi, movesdone d WHERE mi.id IN (SELECT move_id FROM movesdone WHERE plan_id=:plan_id) AND m.id=mi.move_id AND d.move_id=mi.id ORDER BY m.name, d.day DESC" 
     result = db.session.execute(sql, {"plan_id":plan_id})
-    return result.fetchall()
+    list_moves_done = result.fetchall()
+    printable = []
+    edel = 0;
+    for move in list_moves_done:   
+        mid = move[5] 
+        name = f"{move[0]} :"
+        sets = f"{move[1]} sarjaa "
+        reps = f"{move[2]} toistoa"
+        weight = f": {move[3]} kg"
+        date = str(move[4])
+        if mid == edel:
+            row = ["", "", "", date, weight]
+            printable.append(row)
+            edel = mid
+        else:
+            row = [name, sets, reps, date, weight]
+            empty = ["", "", "", "", ""]
+            if (edel > 0):
+                printable.append(empty)
+                printable.append(empty)
+            printable.append(row)
+            edel = mid
+   
+    return printable
+    
 
 def gymvisits_one(plan_id):
     sql = "SELECT COUNT(DISTINCT day) FROM movesdone WHERE plan_id=:plan_id"
@@ -38,6 +61,25 @@ def trim_date(date):
     month_long = get_month_with_number(int(month))  
     return f"{day} {month_long} {year}"
 
+#not in use 
+def workout_stats_per_one(plan_id):
+    data = extract_workout_stats_per_one(plan_id)
+    return data
+
+#not in use
+def extract_workout_stats_per_one(plan_id):
+    sql = "SELECT EXTRACT (DAY from day) AS DAY, EXTRACT (MONTH FROM day) AS MONTH, EXTRACT (YEAR FROM day) AS YEAR FROM movesdone WHERE plan_id=:plan_id GROUP BY DAY"
+    result = db.session.execute(sql, {"plan_id":plan_id})
+    results = result.fetchall()
+
+    data = []
+
+    for r in results:
+        day = int(r[0])
+        month = int(r[1])
+        year = int(r[2])
+        data.append([day,month,year])
+    return data
 
 def get_month_with_number(x):
     if x == 1:
