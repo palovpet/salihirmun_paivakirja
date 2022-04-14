@@ -107,7 +107,7 @@ def document_gymvisit():
         plan_id=plans.get_id(plan_name)
         if date == "":
             return render_template("error.html", message="Et valinnut päivämäärää, jolle kirjaat salikäyntiä")
-        return render_template("/document.html", date=date, plan_name=plan_name, planinfo=plans.get_moves(plan_id))
+        return render_template("/document.html", date=date, plan_name=plan_name, planinfo=plans.get_moves(plan_id), moves_and_weights=plans.move_in_plan_with_last_weight(plan_id))
 
 @app.route("/documentmove", methods=["GET","POST"])
 def document_move():
@@ -116,11 +116,13 @@ def document_move():
     plan_name=request.form["plan_name"]
     date=request.form["date"]
     plan_id=plans.get_id(plan_name)
+    if stats.move_documented_today(moveinformations_id, date, plan_id):
+        return render_template("error.html", message="Kirjasit jo suorittaneesi tämän liikkeen")
     if not moves.validate_weight(weight):
         return render_template("error.html", message="Paino ei voi olla negatiivinen")
     if not moves.document_moveinformation(weight, moveinformations_id, plan_id, date):
         return render_template("error.html", "Virhe kirjattaessa treeniä")
-    return render_template("/document.html", date=date, plan_name=plan_name, planinfo=plans.get_moves(plan_id))
+    return render_template("/document.html", date=date, plan_name=plan_name, planinfo=plans.get_moves(plan_id), moves_and_weights=plans.move_in_plan_with_last_weight(plan_id))
 
 @app.route("/statistics", methods=["POST"])
 def statistics_per_plan():

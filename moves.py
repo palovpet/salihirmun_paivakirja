@@ -19,6 +19,11 @@ def get_id(name):
     id = result.fetchone()[0]
     return id
 
+def get_move_id(id):#moveinformation_id
+    sql = "SELECT move_id FROM moveinformations WHERE id=:id"
+    result = db.session.execute(sql, {"id":id})
+    return result.fetchone()[0]
+
 def accepted_values(sets, reps, weight):
     if sets == "" or reps == "" or weight == "":
         return False
@@ -61,3 +66,4 @@ def document_movedone(move_id, plan_id, day):
     db.session.execute(sql, {"move_id":move_id, "plan_id":plan_id, "day":day})
     db.session.commit()
     return True
+

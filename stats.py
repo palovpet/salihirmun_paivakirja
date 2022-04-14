@@ -1,6 +1,8 @@
 from sqlalchemy import null
 from db import db
 from flask import session
+import moves
+from datetime import datetime
 
 def move_stats(plan_id):
     sql = "SELECT m.name, mi.sets, mi.reps, mi.weights, d.day, m.id FROM moves m, moveinformations mi, movesdone d WHERE mi.id IN (SELECT move_id FROM movesdone WHERE plan_id=:plan_id) AND m.id=mi.move_id AND d.move_id=mi.id ORDER BY m.name, d.day DESC" 
@@ -61,6 +63,13 @@ def trim_date(date):
     month_long = get_month_with_number(int(month))  
     return f"{day} {month_long} {year}"
 
+def move_last_documented(moveinformations_id, plan_id):
+    move_id = moves.get_move_id(moveinformations_id)
+    print(move_id)
+    sql = "SELECT MAX(md.day) FROM movesdone md, movesinplans mp, moveinformations mi WHERE mi.id=mp.move_id AND md.plan_id=mp.plan_id AND mp.plan_id=:plan_id AND mi.move_id=:move_id"
+    result = db.session.execute(sql, {"move_id":move_id, "plan_id":plan_id})
+    return result.fetchone()
+
 #not in use 
 def workout_stats_per_one(plan_id):
     data = extract_workout_stats_per_one(plan_id)
@@ -108,5 +117,21 @@ def get_month_with_number(x):
         return "joulukuuta"
 
 
+def move_documented_today(moveinformations_id, day, plan_id):
+    move_id = moves.get_move_id(moveinformations_id)
+    sql = "SELECT COUNT(*) FROM movesdone md, moveinformations mi WHERE mi.id=md.move_id AND md.plan_id=:plan_id AND mi.move_id=:move_id AND md.day=:day"
+    result = db.session.execute(sql, {"plan_id":plan_id, "move_id":move_id, "day":day})
+    count = int(result.fetchone()[0])
+    if count > 0:
+        return True
+    else:
+        return False
 
+def move_last_weight_and_day_with_moveinformations_id(moveinformations_id, plan_id):
+    move_id = moves.get_move_id(moveinformations_id, plan_id)
+    return move_last_weight_and_day_with_move_id(move_id, plan_id)
 
+def move_last_weight_and_day_with_move_id(move_id, plan_id):
+    sql = "SELECT md.day, mi.weights, mi.move_id FROM movesdone md, moveinformations mi WHERE md.move_id=mi.id AND md.plan_id=:plan_id AND mi.move_id=:move_id ORDER BY md.id DESC LIMIT 1"
+    result = db.session.execute(sql, {"plan_id":plan_id, "move_id":move_id})
+    return result.fetchone()

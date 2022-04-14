@@ -8,16 +8,18 @@ Pvm: {{ date }}
 
 
 <h4>Saliohjelman liikkeet</h4>
-{% for move in planinfo %}
+{% for m in moves_and_weights %}
 <form action="/documentmove" method="POST">
-<b>{{ move[0] }}:</b> 
-{{ move[1] }} sarjaa, {{ move[2] }} toistoa, <input type="number" name="weight"> kg  <input type="submit" name="movetodocument" value="Kirjaa">
-<br><br>
-<input type="hidden" name="moveinformations_id" value="{{ move[4] }}">
-<br>
+
+{{ m[0] }}: {{ m[1] }} sarjaa {{ m[2] }} toistoa <input type="number" name="weight" value="{{ m[3] }}"> kg  <input type="submit" name="movetodocument" value="Kirjaa"> {{ m[3] }} {{ m[4] }}
+
+<input type="hidden" name="moveinformations_id" value="{{ m[5] }}">
+
 <input type="hidden" name="plan_name" value="{{ plan_name }}">
-<input type="hidden" name="date" value="{{ date }}"
-<br>
+<input type="hidden" name="date" value="{{ date }}">
+
+
+
 </form>
 {% endfor %}
 <br>

@@ -1,6 +1,8 @@
 from db import db
 import users
 from flask import session
+import stats
+import moves
 
 def validate_name(name):
     plans = list_all()
@@ -81,3 +83,24 @@ def count_moves(plan_id):
     result = db.session.execute(sql, {"plan_id":plan_id})
     return result.fetchone()[0]
 
+def move_in_plan_with_last_weight(plan_id):
+    move_list = get_moves(plan_id)
+    moves_and_weights = []
+    for i in move_list:
+        name = i[0]
+        sets = i[1]
+        reps = i[2]
+        moveinformation_id = i[4]
+        move_id = moves.get_move_id(moveinformation_id)
+        last_documentation = stats.move_last_weight_and_day_with_move_id(move_id, plan_id)
+        if not last_documentation == None:
+            date = last_documentation[0]
+            date_to_print = f"kg kirjattu {date}"
+            weight = int(last_documentation[1])
+        else:
+            date_to_print = ""
+            weight = ""    
+        new_row = [name, sets, reps, weight, date_to_print, moveinformation_id]
+        moves_and_weights.append(new_row)
+    return moves_and_weights    
+    
