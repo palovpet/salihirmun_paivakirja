@@ -134,11 +134,15 @@ def statistics_per_plan():
     last_time = stats.last_time_one(plan_id)
     return render_template("statistics_one.html", plan_name=plan_name, planinfo=plans.get_moves(plan_id), stats_all=stats_all, count_workouts=count_workouts, first_time=first_time, last_time=last_time)
 
-
 @app.route("/statistics_all", methods=["POST"])
 def statistics_all():
     max_weights = stats.max_weight_per_move()
-    return render_template("statistics_all.html", max_weights=max_weights)
+    monthly_workouts = stats.print_monthly_workout_stats()
+    yearly_workouts = stats.print_yearly_workout_stats()
+    count_workouts = stats.gymvisits_all()
+    first_time = stats.first_time_all()
+    last_time = stats.last_time_all()
+    return render_template("statistics_all.html", max_weights=max_weights, monthly_workouts=monthly_workouts, yearly_workouts=yearly_workouts, count_workouts=count_workouts, first_time=first_time, last_time=last_time)
 
 @app.route("/statistics_move", methods=["POST"])
 def statistics_move():

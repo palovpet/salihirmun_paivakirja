@@ -62,7 +62,7 @@ def trim_date(date):
     month = datelist[1]
     day = datelist[2].strip(")")
     month_long = get_month_with_number(int(month))  
-    return f"{day} {month_long} {year}"
+    return f"{day} {month_long}ta {year}"
 
 def move_last_documented(moveinformations_id, plan_id):
     move_id = moves.get_move_id(moveinformations_id)
@@ -71,51 +71,31 @@ def move_last_documented(moveinformations_id, plan_id):
     result = db.session.execute(sql, {"move_id":move_id, "plan_id":plan_id})
     return result.fetchone()
 
-#not in use 
-def workout_stats_per_one(plan_id):
-    data = extract_workout_stats_per_one(plan_id)
-    return data
-
-#not in use
-def extract_workout_stats_per_one(plan_id):
-    sql = "SELECT EXTRACT (DAY from day) AS DAY, EXTRACT (MONTH FROM day) AS MONTH, EXTRACT (YEAR FROM day) AS YEAR FROM movesdone WHERE plan_id=:plan_id GROUP BY DAY"
-    result = db.session.execute(sql, {"plan_id":plan_id})
-    results = result.fetchall()
-
-    data = []
-
-    for r in results:
-        day = int(r[0])
-        month = int(r[1])
-        year = int(r[2])
-        data.append([day,month,year])
-    return data
-
 def get_month_with_number(x):
     if x == 1:
-        return "tammikuuta"
+        return "tammikuu"
     if x == 2:
-        return "helmikuuta"
+        return "helmikuu"
     if x == 3:
-        return "maaliskuuta"
+        return "maaliskuu"
     if x == 4:
-        return "huhtikuuta"
+        return "huhtikuu"
     if x == 5:
-        return "toukokuuta"
+        return "toukokuu"
     if x == 6:
-        return "kesäkuuta"
+        return "kesäkuu"
     if x == 7:
-        return "heinäkuuta"
+        return "heinäkuu"
     if x == 8:
-        return "elokuuta"
+        return "elokuu"
     if x == 9:
-        return "syyskuuta"
+        return "syyskuu"
     if x == 10:
-        return "lokakuuta"
+        return "lokakuu"
     if x == 11:
-        return "marraskuuta"
+        return "marraskuu"
     if x == 12:
-        return "joulukuuta"
+        return "joulukuu"
 
 
 def move_documented_today(moveinformations_id, day, plan_id):
@@ -149,5 +129,56 @@ def all_weigths_per_move(move_id):
     result = db.session.execute(sql, {"move_id":move_id, "owner_id":owner_id})
     return result.fetchall()
 
+def print_monthly_workout_stats():
+    owner_id = users.user_id()
+    sql = "SELECT DATE_TRUNC('month', day) AS month, COUNT(DISTINCT day) FROM movesdone WHERE plan_id IN (SELECT id FROM gymplans WHERE owner_id=:owner_id) GROUP BY DATE_TRUNC('month', day)"
+    result = db.session.execute(sql, {"owner_id":owner_id})
+    data = result.fetchall()
+    list_to_print = []
+    for d in data:
+        month_split = str(d[0]).split("-")
+        year = month_split[0]
+        month_int = int(month_split[1])
+        month = f"{get_month_with_number(month_int)}ssa"
+        count = d[1]
+        row = year, month, count
+        list_to_print.append(row)
+    return list_to_print
 
+def print_yearly_workout_stats():
+    owner_id = users.user_id()
+    sql = "SELECT DATE_TRUNC('year', day) AS year, COUNT(DISTINCT day) FROM movesdone WHERE plan_id IN (SELECT id FROM gymplans WHERE owner_id=:owner_id) GROUP BY DATE_TRUNC('year', day)"
+    result = db.session.execute(sql, {"owner_id":owner_id})
+    data = result.fetchall()
+    list_to_print = []
+    for d in data:
+        month_split = str(d[0]).split("-")
+        year = month_split[0]
+        count = d[1]
+        row = year, count
+        list_to_print.append(row)
+    return list_to_print
 
+def gymvisits_all():
+    owner_id = users.user_id()
+    sql = "SELECT COUNT(DISTINCT day) FROM movesdone WHERE plan_id IN (SELECT id FROM gymplans WHERE owner_id=:owner_id)"
+    result = db.session.execute(sql, {"owner_id":owner_id})
+    count = str(result.fetchone())
+    count_trimmed = count.strip("(,)")
+    return count_trimmed
+
+def first_time_all():
+    owner_id = users.user_id()
+    sql = "SELECT MIN(day) FROM movesdone WHERE plan_id  IN(SELECT id FROM gymplans WHERE owner_id=:owner_id)"
+    result = db.session.execute(sql, {"owner_id":owner_id})
+    date = result.fetchone()  
+    date_toprint = trim_date(date)  
+    return date_toprint
+
+def last_time_all():
+    owner_id = users.user_id()
+    sql = "SELECT MAX(day) FROM movesdone WHERE plan_id IN (SELECT id FROM gymplans WHERE owner_id=:owner_id)"
+    result = db.session.execute(sql, {"owner_id":owner_id})
+    date = result.fetchone()  
+    date_toprint = trim_date(date)  
+    return date_toprint
