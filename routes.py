@@ -9,7 +9,7 @@ import stats
 @app.route("/")
 def index():
     list_plans = plans.list_all()
-    return render_template("index.html", plans=list_plans)
+    return render_template("index.html", plans=list_plans, moves=moves.list_all())
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -124,7 +124,7 @@ def document_move():
         return render_template("error.html", "Virhe kirjattaessa treeniä")
     return render_template("/document.html", date=date, plan_name=plan_name, planinfo=plans.get_moves(plan_id), moves_and_weights=plans.move_in_plan_with_last_weight(plan_id))
 
-@app.route("/statistics", methods=["POST"])
+@app.route("/statistics_one", methods=["POST"])
 def statistics_per_plan():
     plan_name = request.form["plan_name"]
     plan_id = plans.get_id(plan_name)
@@ -132,4 +132,17 @@ def statistics_per_plan():
     count_workouts = stats.gymvisits_one(plan_id)
     first_time = stats.first_time_one(plan_id)
     last_time = stats.last_time_one(plan_id)
-    return render_template("statistics.html", plan_name=plan_name, planinfo=plans.get_moves(plan_id), stats_all=stats_all, count_workouts=count_workouts, first_time=first_time, last_time=last_time)
+    return render_template("statistics_one.html", plan_name=plan_name, planinfo=plans.get_moves(plan_id), stats_all=stats_all, count_workouts=count_workouts, first_time=first_time, last_time=last_time)
+
+
+@app.route("/statistics_all", methods=["POST"])
+def statistics_all():
+    max_weights = stats.max_weight_per_move()
+    return render_template("statistics_all.html", max_weights=max_weights)
+
+@app.route("/statistics_move", methods=["POST"])
+def statistics_move():
+    move_name = request.form["move_name"]
+    move_id = moves.get_id(move_name)
+    all_weights = stats.all_weigths_per_move(move_id) 
+    return render_template("statistics_move.html", all_weights=all_weights, move_name=move_name)

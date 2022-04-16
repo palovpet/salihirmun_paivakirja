@@ -34,7 +34,6 @@ Sisäänkirjautunut salihirmu: <i>{{ session.user_name }}</i>
     <option value= "{{ plan.name }}""> {{ plan.name }}</option>
     {% endfor %}
   </select>
-  <a href="/editplan">
     <input type="submit" value="Näytä ja muokkaa">
   </a>
 </form>
@@ -52,21 +51,39 @@ Sisäänkirjautunut salihirmu: <i>{{ session.user_name }}</i>
 
 <h4>Tarkastele tilastoja</h4>
 
-<form action="/statistics" method="POST">
-  <label for="plan_name">Valitse tarkasteltava saliohjelma</label>
+<form action="/statistics_one" method="POST">
+  <label for="plan_name">Tarkastele yksittäisen saliohjelman tilastoja</label>
   <select name="plan_name" id="plan_name">
     {% for plan in plans %}
     <option value= "{{ plan.name }}""> {{ plan.name }}</option>
     {% endfor %}
   </select>
-  <a href="/editplan">
     <input type="submit" value="Näytä tilastot">
 </form>
 <br>
 <br>
 
+<form action="/statistics_all" method="POST">
+  Tarkastele tilastoja treenikerroista ja liikkeistä jotka ovat saliohjelmissasi
+  <input type="submit" name="stats_all" value="Näytä tilastot">
+</form>
+<br>
+<br>
 
+<form action="/statistics_move" method="POST">
+  <label for="move_name">Tarkastele yksittäisen liikkeen tilastoja</label>
+  <select name="move_name" id="move_name">
+    {% for move in moves %}
+    <option value= "{{ move.name }}""> {{ move.name }}</option>
+    {% endfor %}
+  </select>
+  <input type="submit" name="stats_all" value="Näytä tilastot">
+</form>
+<br>
+<br>
 
+<br>
+<br>
 <a href="/logout">Kirjaudu ulos</a>
 
 {% else %}

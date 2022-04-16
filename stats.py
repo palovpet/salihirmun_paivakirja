@@ -3,6 +3,7 @@ from db import db
 from flask import session
 import moves
 from datetime import datetime
+import users
 
 def move_stats(plan_id):
     sql = "SELECT m.name, mi.sets, mi.reps, mi.weights, d.day, m.id FROM moves m, moveinformations mi, movesdone d WHERE mi.id IN (SELECT move_id FROM movesdone WHERE plan_id=:plan_id) AND m.id=mi.move_id AND d.move_id=mi.id ORDER BY m.name, d.day DESC" 
@@ -135,3 +136,18 @@ def move_last_weight_and_day_with_move_id(move_id, plan_id):
     sql = "SELECT md.day, mi.weights, mi.move_id FROM movesdone md, moveinformations mi WHERE md.move_id=mi.id AND md.plan_id=:plan_id AND mi.move_id=:move_id ORDER BY md.id DESC LIMIT 1"
     result = db.session.execute(sql, {"plan_id":plan_id, "move_id":move_id})
     return result.fetchone()
+
+def max_weight_per_move():
+    owner_id = users.user_id()
+    sql = "SELECT MAX(mi.weights), m.name FROM moves m, moveinformations mi, movesdone md WHERE mi.id=md.move_id AND m.id=mi.move_id AND md.plan_id IN(SELECT id FROM gymplans WHERE owner_id=:owner_id) GROUP BY m.id ORDER BY m.id"
+    result = db.session.execute(sql, {"owner_id":owner_id})
+    return result.fetchall()
+
+def all_weigths_per_move(move_id):
+    owner_id = users.user_id()
+    sql = "SELECT mi.weights, md.day, g.name, mi.sets, mi.reps FROM moveinformations mi, movesdone md, gymplans g WHERE g.id=md.plan_id AND mi.id=md.move_id AND mi.move_id=:move_id AND md.plan_id IN (SELECT id FROM gymplans WHERE owner_id=:owner_id) ORDER BY md.day"
+    result = db.session.execute(sql, {"move_id":move_id, "owner_id":owner_id})
+    return result.fetchall()
+
+
+

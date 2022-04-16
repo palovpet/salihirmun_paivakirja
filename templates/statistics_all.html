@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h3>Käyttäjän <i>{{ session.user_name }}</i> tilastot:</h3>
+
+<h4>Korkeimmat kirjatut sarjapainot</h4>
+{% for max in max_weights %}
+<b>{{ max[1] }}:</b> {{ max[0] }} kg <br>
+{% endfor %}
+
+
+<br>
+<br>
+<a href="/">Palaa etusivulle</a>
+{% endblock %}

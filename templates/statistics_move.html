@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h3>Käyttäjän <i>{{ session.user_name }}</i> tilastot liikkeelle <i> {{ move_name }} </i></h3>
+
+{% for all in all_weights %}
+{{ all[1]  }}: {{ all[0]  }}kg  (Saliohjelmassa <i>{{ all[2]  }}</i>  {{ all[3]  }} sarjaa, {{ all[4]  }} toistoa) <br>
+{% endfor %}
+
+<br>
+<br>
+<a href="/">Palaa etusivulle</a>
+{% endblock %}
