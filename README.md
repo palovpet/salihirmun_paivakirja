@@ -30,15 +30,13 @@ Käyttäjä voi katsella yksittäisen saliohjelman tilastoja:
 - Liikkeiden sarjapainojen kehitys
 - Ensimmäinen treenikirjaus, viimeisin treenikirjaus, montako treenikirjausta on tehty
 
+Käyttäjä voi katsoa tilastoja omista treeneistään läpi saliohjelmien. Saatavilla olevat toiminnot:
+- Ensimmäinen treenikirjaus, viimeisin treenikirjaus, montako treenikirjausta on yhteensä
+- Tilasto siitä kuinka usein treejenä on tehty kuukaudessa / vuodessa
+- Jokaisen liikeeen joka kuuluu johonkin käyttäjän treenipohjaan kohdalla voidaan tarkastella kehitystä (sarjapainojen kasvu suhteessa aikaan)
 
 ### Keskeneräiset toiminnallisuudet:
 
-Käyttäjä voi katsoa tilastoja omista treeneistään läpi saliohjelmien. Saatavilla olevat toiminnot:
-- Ensimmäinen treenikirjaus, viimeisin treenikirjaus, montako treenikirjausta on yhteensä
-- Tilasto siitä kuinka usein treejenä on tehty viikossa / kuukaudessa / vuodessa
-- Jokaisen liikeeen joka kuuluu johonkin käyttäjän treenipohjaan kohdalla voidaan tarkastella kehitystä (sarjapainojen kasvu suhteessa aikaan)
-
-
 Käyttäjä voi verrata omia tilastojaan muiden käyttäjien tilastoihin. Saatavilla olevat toiminnot:
-- Treenikertojen erot (kumpi on treenannut enemmän viikossa / kuukaudessa / vuodessa)
+- Treenikertojen erot (kumpi on treenannut enemmän kuukaudessa / vuodessa)
 - Niiden liikkeiden osalta jotka kuuluvat kummankin johonkin treenipohjaan voi vertailla sarjapainojen max arvojen eroja
