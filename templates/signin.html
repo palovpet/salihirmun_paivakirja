@@ -1,14 +1,15 @@
 {% extends "layout.html" %}
-{% block title %}Luo uusi käyttäjä{% endblock %}
+
 {% block content %}
+
+<h4>Luo uusi käyttäjätunnus</h4>
+Sekä käyttäjätunnuksen että salasanan on oltava pituudeltaan 3-20 merkkiä.<br>
+
 <form action="/signin" method="post">
-Tunnus: <input type="text" name="username">
-<p>
-Salasana: <input type="password" name="password1">
-<p>
-Salasana uudestaan: <input type="password" name="password2">
-<p>
-<input type="submit" value="Luo tunnus">
+Tunnus: <input type="text" name="username"><br>
+Salasana: <input type="password" name="password1"><br>
+Salasana uudestaan: <input type="password" name="password2"><br>
+  <input type="submit" value="Luo tunnus">
 </form>
 
 <a href="/">Palaa etusivulle</a>

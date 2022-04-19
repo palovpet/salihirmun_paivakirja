@@ -1,69 +1,70 @@
 from db import db
-from flask import session
+
 
 def list_all():
     sql = "SELECT name FROM moves"
     result = db.session.execute(sql)
     return result.fetchall()
 
-def count_available_moves():
-    sql = "SELECT COUNT(*) FROM moves"
-    result = db.session.execute(sql)
-    count = result.fetchone()
-    count_trim = str(count).strip("(,)")
-    return count_trim
 
-def get_id(name):
+def get_move_id_with_name(name):
     sql = "SELECT id FROM moves WHERE name=:name"
-    result = db.session.execute(sql, {"name":name})
-    id = result.fetchone()[0]
-    return id
+    result = db.session.execute(sql, {"name": name})
+    move_id = result.fetchone()[0]
+    return move_id
 
-def get_move_id(id):#moveinformation_id
-    sql = "SELECT move_id FROM moveinformations WHERE id=:id"
-    result = db.session.execute(sql, {"id":id})
+
+def get_move_id_with_moveinfo_id(moveinfo_id):
+    sql = "SELECT move_id FROM moveinformations WHERE id=:moveinfo_id"
+    result = db.session.execute(sql, {"moveinfo_id": moveinfo_id})
     return result.fetchone()[0]
 
-def accepted_values(sets, reps, weight):
-    if sets == "" or reps == "" or weight == "":
+
+def sets_and_reps_valid(sets, reps):
+    if sets == "" or reps == "":
         return False
-    if weight < 0:
+    if int(sets) < 1 or int(reps) < 1:
         return False
     return True
 
-def validate_sets_reps(sets, reps):
-    if int(sets) < 1 or int(reps) < 1:
-        return False
-    else:
-        return True     
 
-def validate_weight(weight):
+def weight_valid(weight):
     if int(weight) < 0:
         return False
-    else:
-        return True     
+    return True
 
-def get_moveinfo(moveinformations_id):
-    sql = "SELECT move_id, sets, reps, weights FROM moveinformations WHERE id=:moveinformations_id"
-    result = db.session.execute(sql, {"moveinformations_id":moveinformations_id})
+
+def get_moveinfo(moveinfo_id):
+    sql = "SELECT move_id, sets, reps, weights FROM moveinformations WHERE id=:moveinfo_id"
+    result = db.session.execute(sql, {"moveinfo_id": moveinfo_id})
     return result.fetchone()
- 
-def document_moveinformation(weight, moveinformations_id, plan_id, date):
+
+
+def document_moveinfo(weight, moveinfo_id, plan_id, date):
     weights = weight
-    moveinfo = get_moveinfo(moveinformations_id)
+    moveinfo = get_moveinfo(moveinfo_id)
     move_id = moveinfo[0]
     sets = moveinfo[1]
     reps = moveinfo[2]
-    sql = "INSERT INTO moveinformations (move_id, sets, reps, weights) VALUES (:move_id, :sets, :reps, :weights) RETURNING id"
-    result = db.session.execute(sql, {"move_id":move_id, "sets":sets, "reps":reps, "weights":weights})
-    id_of_added_move = result.fetchone()[0]
-    db.session.commit()
-    document_movedone(id_of_added_move, plan_id, date)
-    return True
+    try:
+        sql = """INSERT INTO moveinformations (move_id, sets, reps, weights)
+                 VALUES (:move_id, :sets, :reps, :weights) RETURNING id"""
+        result = db.session.execute(
+            sql, {"move_id": move_id, "sets": sets, "reps": reps, "weights": weights})
+        moveinfo_id = result.fetchone()[0]
+        db.session.commit()
+    except:
+        return False
+    return document_movedone(moveinfo_id, plan_id, date)
 
-def document_movedone(move_id, plan_id, day):
-    sql = "INSERT INTO movesdone (move_id, plan_id, day) VALUES (:move_id, :plan_id, :day)"
-    db.session.execute(sql, {"move_id":move_id, "plan_id":plan_id, "day":day})
-    db.session.commit()
-    return True
 
+def document_movedone(moveinfo_id, plan_id, day):
+    try:
+        sql = """INSERT INTO movesdone (moveinfo_id, plan_id, day) 
+                VALUES (:moveinfo_id, :plan_id, :day)"""
+        db.session.execute(
+            sql, {"moveinfo_id": moveinfo_id, "plan_id": plan_id, "day": day})
+        db.session.commit()
+    except:
+        return False
+    return True

@@ -8,7 +8,7 @@ Sisäänkirjautunut salihirmu: <i>{{ session.user_name }}</i>
 
 {% if plans %}
 
-<h4>Kirjaa treeni</h4>
+<h3>Kirjaa treeni</h3>
 
 <form action="/opengymplan" method="POST">
   <label for="plan_name">Valitse saliohjelma</label>
@@ -23,9 +23,8 @@ Sisäänkirjautunut salihirmu: <i>{{ session.user_name }}</i>
     <input type="submit" value="Siirry kirjaukseen">
   </a>
 </form>
-<br>
 
-<h4>Muokkaa saliohjelmaa</h4>
+<h3>Muokkaa saliohjelmaa</h3>
 
 <form action="/editplan" method="POST">
   <label for="plan_name">Valitse muokattava saliohjelma</label>
@@ -37,19 +36,18 @@ Sisäänkirjautunut salihirmu: <i>{{ session.user_name }}</i>
     <input type="submit" value="Näytä ja muokkaa">
   </a>
 </form>
-<br>
 
 {% endif %}
 
-<h4>Luo uusi saliohjelma</h4>
-
+<h3>Luo uusi saliohjelma</h3>
+Nimen on oltava pituudeltaan 3-30 merkkiä, eikä se voi olla sama kuin aiemmin luomasi saliohjelman nimi.
 <form action="/addplan" method="POST">
   Anna saliohjelman nimi: <input type="text" name="name">
   <input type="submit" value="Tallenna">
 </form>
-<br>
 
-<h4>Tarkastele tilastoja</h4>
+{% if stats_found %}
+<h3>Tarkastele tilastoja</h3>
 
 <form action="/statistics_one" method="POST">
   <label for="plan_name">Tarkastele yksittäisen saliohjelman tilastoja</label>
@@ -61,13 +59,11 @@ Sisäänkirjautunut salihirmu: <i>{{ session.user_name }}</i>
     <input type="submit" value="Näytä tilastot">
 </form>
 <br>
-<br>
 
 <form action="/statistics_all" method="POST">
   Tarkastele tilastoja treenikerroista ja liikkeistä jotka ovat saliohjelmissasi
   <input type="submit" name="stats_all" value="Näytä tilastot">
 </form>
-<br>
 <br>
 
 <form action="/statistics_move" method="POST">
@@ -80,10 +76,8 @@ Sisäänkirjautunut salihirmu: <i>{{ session.user_name }}</i>
   <input type="submit" name="stats_all" value="Näytä tilastot">
 </form>
 <br>
-<br>
+{% endif %}
 
-<br>
-<br>
 <a href="/logout">Kirjaudu ulos</a>
 
 {% else %}
@@ -91,11 +85,9 @@ Sisäänkirjautunut salihirmu: <i>{{ session.user_name }}</i>
 Kirjaudu sisään
 <br>
 <form action="/login" method="post">
-Tunnus: <input type="text" name="username">
-<p>
-Salasana: <input type="password" name="password">
-<p>
-<input type="submit" value="Kirjaudu">
+Tunnus: <input type="text" name="username"><br>
+Salasana: <input type="password" name="password"><br>
+  <input type="submit" value="Kirjaudu">
 </form>
 <br>
 

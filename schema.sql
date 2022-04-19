@@ -21,19 +21,19 @@ CREATE TABLE moveinformations (
 	move_id INTEGER REFERENCES moves,
 	sets INTEGER,
 	reps INTEGER,
-	weights INTEGER
+	weight INTEGER
 );
 
 CREATE TABLE movesinplans (
     id SERIAL PRIMARY KEY,
-	move_id INTEGER REFERENCES moves,
+	moveinfo_id INTEGER REFERENCES moveinformations,
     plan_id INTEGER REFERENCES gymplans,
     visible BOOLEAN DEFAULT TRUE
 );
 
 CREATE TABLE movesdone ( 
     id SERIAL PRIMARY KEY,
-	move_id INTEGER REFERENCES moveinformations,
+	moveinfo_id INTEGER REFERENCES moveinformations,
 	plan_id INTEGER REFERENCES gymplans,
 	day DATE
 );

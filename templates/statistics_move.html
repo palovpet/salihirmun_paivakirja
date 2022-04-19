@@ -1,4 +1,5 @@
 {% extends "layout.html" %}
+
 {% block content %}
 
 <h3>Käyttäjän <i>{{ session.user_name }}</i> tilastot liikkeelle <i> {{ move_name }} </i></h3>
@@ -8,6 +9,6 @@
 {% endfor %}
 
 <br>
-<br>
 <a href="/">Palaa etusivulle</a>
+
 {% endblock %}

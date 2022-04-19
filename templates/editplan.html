@@ -1,45 +1,36 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<br>
-Muokattava saliohjelma: <i>{{ plan_name }}</i>
-<br>
 
-<br>
+<h3>Muokattava saliohjelma: <i>{{ plan_name }}</i></h3>
+Toistoja ja sarjoja on oltava vähintään yksi.
 <form action="/addmove" method="POST">
-<label for="move_name">Valitse lisättävä liike  </label>
-<select name="move_name" id="move_name">
-  {% for move in moves %}
-  <option value= "{{ move.name }}""> {{ move.name }}</option>
-  {% endfor %}
-</select>
-<br>
-
+  <label for="move_name">Valitse lisättävä liike  </label>
+  <select name="move_name" id="move_name">
+    {% for move in moves %}
+    <option value= "{{ move.name }}""> {{ move.name }}</option>
+    {% endfor %}
+  </select><br>
 Sarjoja: <input type="number" name="sets">
 Toistoja: <input type="number" name="reps">
-<input type="hidden" name="plan_id" value="{{ plan_id }}">
-<a href="/editplan">
-  <input type="submit" value="Lisää liike">
-</a>
+  <input type="hidden" name="plan_id" value="{{ plan_id }}">
+  <a href="/editplan">
+    <input type="submit" value="Lisää liike">
+   </a>
 </form>
-<br>
 
 {% if planinfo %}
 
-<br>
 <h4>Saliohjelman liikkeet</h4>
 {% for move in planinfo %}
 <form action="/deletemove" method="POST">
-<b>{{ move[0] }}:</b> 
-{{ move[1] }} sarjaa, {{ move[2] }} toistoa  <input type="submit" name="movetodelete" value="Poista liike"><br><br>
-<input type="hidden" name="moveinformations_id" value="{{ move[4] }}">
-<br>
+  <b>{{ move[0] }}:</b> {{ move[1] }} sarjaa, {{ move[2] }} toistoa  <input type="submit" name="movetodelete" value="Poista liike"><br>
+  <input type="hidden" name="moveinformations_id" value="{{ move[4] }}">
 </form>
 {% endfor %}
-<br>
 
 {% endif %}
-
+<br>
 <a href="/">Palaa etusivulle</a>
 
 {% endblock %}
