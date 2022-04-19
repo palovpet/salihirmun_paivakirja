@@ -110,7 +110,7 @@ def document_gymvisit():
             return render_template("error.html", message="Et valinnut päivämäärää")
         return render_template("/document.html", date=date, plan_name=plan_name,
                                planinfo=plans.get_moves_in_plan(plan_id),
-                               moves_and_weights=plans.moves_and_last_weights(plan_id))
+                               moves_and_weights=plans.moves_and_last_weight(plan_id))
 
 @app.route("/documentmove", methods=["GET", "POST"])
 def document_move():
@@ -127,7 +127,7 @@ def document_move():
         return render_template("error.html", message="Virhe kirjattaessa treeniä")
     return render_template("/document.html", date=date, plan_name=plan_name,
                            planinfo=plans.get_moves_in_plan(plan_id),
-                           moves_and_weights=plans.moves_and_last_weights(plan_id))
+                           moves_and_weights=plans.moves_and_last_weight(plan_id))
 
 @app.route("/statistics_one", methods=["POST"])
 def statistics_per_plan():

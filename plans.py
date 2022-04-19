@@ -58,19 +58,19 @@ def get_name_with_plan_id(plan_id):
 
 
 def get_moves_in_plan(plan_id):
-    sql = """SELECT m.name, mi.sets, mi.reps, mi.weights, mi.id 
+    sql = """SELECT m.name, mi.sets, mi.reps, mi.weight, mi.id 
              FROM moves m, moveinformations mi WHERE mi.id IN (SELECT moveinfo_id FROM movesinplans
              WHERE plan_id=:plan_id AND visible=TRUE) AND m.id=mi.move_id"""
     result = db.session.execute(sql, {"plan_id": plan_id})
     return result.fetchall()
 
 
-def add_move_to_plan(plan_id, move_id, sets, reps, weights):
+def add_move_to_plan(plan_id, move_id, sets, reps, weight):
     try:
-        sql = """INSERT INTO moveinformations (move_id, sets, reps, weights)
-                 VALUES (:move_id, :sets, :reps, :weights) RETURNING id"""
+        sql = """INSERT INTO moveinformations (move_id, sets, reps, weight)
+                 VALUES (:move_id, :sets, :reps, :weight) RETURNING id"""
         result = db.session.execute(
-            sql, {"move_id": move_id, "sets": sets, "reps": reps, "weights": weights})
+            sql, {"move_id": move_id, "sets": sets, "reps": reps, "weight": weight})
         moveinfo_id = result.fetchone()[0]
     except:
         return False
@@ -109,9 +109,9 @@ def count_moves_in_plan(plan_id):
     return result.fetchone()[0]
 
 
-def moves_and_last_weights(plan_id):
+def moves_and_last_weight(plan_id):
     move_list = get_moves_in_plan(plan_id)
-    moves_and_weights = []
+    moves_and_weight = []
     for move in move_list:
         name = move[0]
         sets = move[1]
@@ -128,5 +128,5 @@ def moves_and_last_weights(plan_id):
             date_to_print = ""
             weight = ""
         new_row = [name, sets, reps, weight, date_to_print, moveinformation_id]
-        moves_and_weights.append(new_row)
-    return moves_and_weights
+        moves_and_weight.append(new_row)
+    return moves_and_weight

@@ -35,22 +35,22 @@ def weight_valid(weight):
 
 
 def get_moveinfo(moveinfo_id):
-    sql = "SELECT move_id, sets, reps, weights FROM moveinformations WHERE id=:moveinfo_id"
+    sql = "SELECT move_id, sets, reps, weight FROM moveinformations WHERE id=:moveinfo_id"
     result = db.session.execute(sql, {"moveinfo_id": moveinfo_id})
     return result.fetchone()
 
 
 def document_moveinfo(weight, moveinfo_id, plan_id, date):
-    weights = weight
+    weight = weight
     moveinfo = get_moveinfo(moveinfo_id)
     move_id = moveinfo[0]
     sets = moveinfo[1]
     reps = moveinfo[2]
     try:
-        sql = """INSERT INTO moveinformations (move_id, sets, reps, weights)
-                 VALUES (:move_id, :sets, :reps, :weights) RETURNING id"""
+        sql = """INSERT INTO moveinformations (move_id, sets, reps, weight)
+                 VALUES (:move_id, :sets, :reps, :weight) RETURNING id"""
         result = db.session.execute(
-            sql, {"move_id": move_id, "sets": sets, "reps": reps, "weights": weights})
+            sql, {"move_id": move_id, "sets": sets, "reps": reps, "weight": weight})
         moveinfo_id = result.fetchone()[0]
         db.session.commit()
     except:
