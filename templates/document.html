@@ -4,10 +4,10 @@
 Valittu saliohjelma: <i>{{ plan_name }}</i> <br>
 Pvm: {{ date }} <br>
 
-<h4>Saliohjelman liikkeet</h4>
 {% for m in moves_and_weights %}
 <form action="/documentmove" method="POST">
-{{ m[0] }}: {{ m[1] }} sarjaa {{ m[2] }} toistoa <input type="number" name="weight" value="{{ m[3] }}"> kg  
+<b>{{ m[0] }}: {{ m[1] }} sarjaa {{ m[2] }} toistoa </b> <br>
+  <input type="number" name="weight" value="{{ m[3] }}"> kg  
   <input type="submit" name="movetodocument" value="Kirjaa"> {{ m[3] }} {{ m[4] }}
   <input type="hidden" name="moveinformations_id" value="{{ m[5] }}">
   <input type="hidden" name="plan_name" value="{{ plan_name }}">

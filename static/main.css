@@ -1,0 +1,58 @@
+body {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    background-color: rgb(238, 192, 215);
+    text-align: center;    
+}
+
+.header {
+    position: relative;
+    text-align: center;
+    max-width: 100%;
+}
+
+.content {
+    background: white;
+    color:rgb(109, 36, 81);
+    position: relative;
+    font-size: larger;
+    padding: 5%;
+ }
+
+ a:link, a:visited {
+     color: hotpink;
+ }
+
+ input[type=submit]  {
+    background-color: hotpink;
+    color:white;
+    padding: 1% 3%;
+    margin: 3%;
+    box-sizing: border-box;
+    font-size: medium;
+    width: auto;
+    border-radius: 75%;
+ }
+
+ input {
+    background-color: white;
+    color: hotpink;
+    width: 30%;
+    padding: 1% 3%;
+    margin: 3%;
+    box-sizing: border-box;
+    font-size: medium;
+ }
+
+ select  {
+    background-color: white;
+    color: hotpink;
+    font-size: medium;
+    width: 50%;
+    padding: 1% 3%;
+    margin: 3%;
+    box-sizing: border-box;
+    font-size: medium;
+ }
+
+ 
+ 
