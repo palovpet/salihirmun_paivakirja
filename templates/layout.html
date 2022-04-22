@@ -1,12 +1,16 @@
-<!DOCTYPE html>
-<link re-="stylesheet" href="main.css">
+<!doctype html>
+<link rel="stylesheet" href="assets/main.css">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>Salihirmun päiväkirja</title>
 
 <body>
- <h1>Salihirmun päiväkirja</h1>
-{% block title %}{% endblock %}
-<br>
-{% block content %}{% endblock %}
+    <div class="header">
+        <h1>Salihirmun päiväkirja</h1>
+    </div>
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
 </body>
+
+
