@@ -17,14 +17,14 @@ Käyttäjä voi luoda max 5 pohjaa kuntosalitreenille:
 - Saliohjelman muokkaustilassa lisätään liikkeitä valitsemalla liike alasvetovalikosta ja antamalla sarjojen ja toistojen lukumäärä
 - Saliohjelman liikkeet -osiossa näkyy suunnitelmassa olevat liikkeet, sarjat ja toistot
 - Saliohjelmasta voi poistaa liikkeen napsauttamalla Saliohjelman liikkeet -osiossa Poista liike -painiketta kyseisen likkeen kohdalla
-- Yhteen saliohjelmaan sallitaan max 10 liikettä
-Ohjelman keskeneräisyyden vuoksi liikkeitä on valittavissa vasta kolme, näitä tullaan lisäämään
+- Yhteen saliohjelmaan sallitaan max 10 liikettä, tietty liike voi olla yhdessä saliohjelmassa vain kerran
 
 
 Käyttäjä voi kirjata kuntosalitreenin:
 - Kirjataan päivämäärä ja mikä saliohjelma on suoritettu
 - Jokaisen liikkeen kohdalla kirjataan sarjapainot
 - Jokaisen liikkeen kohdalla oletuksena liikkeen sarjapainoksi tarjotaan edellisellä kerralla kirjattua, mutta sitä voi muokata
+- Viimeisin kirjattu paino näytetään myös liikkeen kohdalla, mikäli tieto on olemassa
 
 Käyttäjä voi katsella yksittäisen saliohjelman tilastoja:
 - Liikkeiden sarjapainojen kehitys
@@ -33,7 +33,10 @@ Käyttäjä voi katsella yksittäisen saliohjelman tilastoja:
 Käyttäjä voi katsoa tilastoja omista treeneistään läpi saliohjelmien. Saatavilla olevat toiminnot:
 - Ensimmäinen treenikirjaus, viimeisin treenikirjaus, montako treenikirjausta on yhteensä
 - Tilasto siitä kuinka usein treejenä on tehty kuukaudessa / vuodessa
-- Jokaisen liikeeen joka kuuluu johonkin käyttäjän treenipohjaan kohdalla voidaan tarkastella kehitystä (sarjapainojen kasvu suhteessa aikaan)
+
+Jokaisen liikeeen joka kuuluu johonkin käyttäjän treenipohjaan kohdalla voidaan tarkastella kehitystä
+
+Visuaalinen ilme on viimeistelemätön. Huomoitavaa, että sovellus on ajateltu pääasiassa älypuhelimella käytettäväksi, joten visuaalinen ilme on siistimpi puhelimella kuin tietokoneen selaimella.
 
 ### Keskeneräiset toiminnallisuudet:
 
