@@ -16,7 +16,7 @@ Sisäänkirjautunut salihirmu: <i>{{ session.user_name }}</i>
     {% for plan in plans %}
     <option value= "{{ plan.name }}"> {{ plan.name }}</option>
     {% endfor %}
-  </select>
+  </select><br>
   <label for="date"> ja treenipäivä </label>
   <input type="date" name="date">
   <a href="/document">
