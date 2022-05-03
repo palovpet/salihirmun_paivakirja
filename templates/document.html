@@ -13,6 +13,7 @@ Pvm: {{ date }} <br>
   <input type="hidden" name="moveinformations_id" value="{{ m[5] }}">
   <input type="hidden" name="plan_name" value="{{ plan_name }}">
   <input type="hidden" name="date" value="{{ date }}">
+  <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
 {% endfor %}
 

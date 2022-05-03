@@ -49,6 +49,7 @@ def addplan():
     if request.method == "GET":
         return render_template("index.html", plans=list_plans)
     if request.method == "POST":
+        users.check_csrf()
         name = request.form["name"]
         count_plans = users.get_count_plans()
         if int(count_plans) >= 5:
@@ -64,6 +65,7 @@ def edit_plan():
     if request.method == "GET":
         return render_template("editplan.html")
     if request.method == "POST":
+        users.check_csrf()
         plan_name = request.form["plan_name"]
         return render_template("editplan.html", moves=moves.list_all(), plan_name=plan_name,
                                plan_id=plans.get_id_with_name(plan_name),
@@ -71,6 +73,7 @@ def edit_plan():
 
 @app.route("/addmove", methods=["POST"])
 def add_move_to_plan():
+    users.check_csrf()
     plan_id = request.form["plan_id"]
     if plans.count_moves_in_plan(plan_id) >= 10:
         return render_template("error.html", message="Suunnitelmassa on jo kymmenen liikettä")
@@ -91,6 +94,7 @@ def add_move_to_plan():
 
 @app.route("/deletemove", methods=["POST"])
 def delete_move_from_plan():
+    users.check_csrf()
     moveinformations_id = request.form["moveinformations_id"]
     plan_id = plans.get_id_with_moveinfo_id(moveinformations_id)
     if not plans.delete_move_from_plan(moveinformations_id):
@@ -104,6 +108,7 @@ def document_gymvisit():
     if request.method == "GET":
         return render_template("document.html")
     if request.method == "POST":
+        users.check_csrf()
         plan_name = request.form["plan_name"]
         date = request.form["date"]
         plan_id = plans.get_id_with_name(plan_name)
@@ -115,6 +120,7 @@ def document_gymvisit():
 
 @app.route("/documentmove", methods=["GET", "POST"])
 def document_move():
+    users.check_csrf()
     weight = request.form["weight"]
     moveinformations_id = request.form["moveinformations_id"]
     plan_name = request.form["plan_name"]
@@ -132,6 +138,7 @@ def document_move():
 
 @app.route("/statistics_one", methods=["POST"])
 def statistics_per_plan():
+    users.check_csrf()
     plan_name = request.form["plan_name"]
     plan_id = plans.get_id_with_name(plan_name)
     stats_all = stats.moves_per_plan(plan_id)
@@ -148,6 +155,7 @@ def statistics_per_plan():
 
 @app.route("/statistics_all", methods=["POST"])
 def statistics_all():
+    users.check_csrf()
     max_weights = stats.max_weight_per_move()
     monthly_workouts = stats.print_monthly_workout_stats()
     yearly_workouts = stats.print_yearly_workout_stats()
@@ -164,6 +172,7 @@ def statistics_all():
 
 @app.route("/statistics_move", methods=["POST"])
 def statistics_move():
+    users.check_csrf()
     move_name = request.form["move_name"]
     move_id = moves.get_move_id_with_name(move_name)
     all_weights = stats.all_weigths_per_move(move_id)

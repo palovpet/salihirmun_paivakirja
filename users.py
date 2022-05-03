@@ -1,4 +1,5 @@
-from flask import session
+import secrets
+from flask import session, abort, request
 from werkzeug.security import check_password_hash, generate_password_hash
 from db import db
 
@@ -8,11 +9,16 @@ def login(username, password):
     user = result.fetchone()
     if not user:
         return False
-    if check_password_hash(user.password, password):
-        session["user_id"] = user[0]
-        session["user_name"] = username
-        return True
-    return False
+    if not check_password_hash(user.password, password):
+        return False
+    session["user_id"] = user[0]
+    session["user_name"] = username    
+    session["csrf_token"] = secrets.token_hex(16)
+    return True
+
+def check_csrf():
+    if session["csrf_token"] != request.form["csrf_token"]:
+        abort(403)
 
 
 def logout():

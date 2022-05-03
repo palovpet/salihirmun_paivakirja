@@ -17,6 +17,7 @@ Toistoja: <input type="number" name="reps">
   <a href="/editplan">
     <input type="submit" value="Lisää liike">
    </a>
+   <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
 
 {% if planinfo %}
@@ -26,6 +27,7 @@ Toistoja: <input type="number" name="reps">
 <form action="/deletemove" method="POST">
   <b>{{ move[0] }}:</b> {{ move[1] }} sarjaa, {{ move[2] }} toistoa  <input type="submit" name="movetodelete" value="Poista liike"><br>
   <input type="hidden" name="moveinformations_id" value="{{ move[4] }}">
+  <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
 {% endfor %}
 
