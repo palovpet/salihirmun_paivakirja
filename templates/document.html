@@ -7,8 +7,9 @@ Pvm: {{ date }} <br>
 {% for m in moves_and_weights %}
 <form action="/documentmove" method="POST">
 <b>{{ m[0] }}: {{ m[1] }} sarjaa {{ m[2] }} toistoa </b> <br>
-  <input type="number" name="weight" value="{{ m[3] }}"> kg  
-  <input type="submit" name="movetodocument" value="Kirjaa"> {{ m[3] }} {{ m[4] }}
+   {{ m[3] }} {{ m[4] }} <br>
+  <input type="number" step=".01" name="weight" value="{{ m[3] }}"> kg
+  <input type="submit" name="movetodocument" value="Kirjaa"> <br><br>
   <input type="hidden" name="moveinformations_id" value="{{ m[5] }}">
   <input type="hidden" name="plan_name" value="{{ plan_name }}">
   <input type="hidden" name="date" value="{{ date }}">

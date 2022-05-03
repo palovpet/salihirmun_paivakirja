@@ -123,7 +123,7 @@ def moves_and_last_weight(plan_id):
         if last_documentation:
             date = last_documentation[0]
             date_to_print = f"kg kirjattu {date}"
-            weight = int(last_documentation[1])
+            weight = float(last_documentation[1])
         else:
             date_to_print = ""
             weight = ""

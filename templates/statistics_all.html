@@ -3,18 +3,18 @@
 {% block content %}
 
 <h3>Käyttäjän <i>{{ session.user_name }}</i> tilastot</h3>
-Olet kirjannut yhteensä <b>{{ count_workouts }}</b> treenikertaa. Ensimmäisen kerran <b>{{ first  }}</b>, ja viimeksi <b>{{ last }}</b>
-
+Olet kirjannut yhteensä <b>{{ count_workouts }}</b> treenikertaa, ensimmäisen kerran {{ first  }} {{ last }} <br>
+<br>
 <h4>Korkeimmat kirjatut sarjapainot</h4>
 {% for max in max_weights %}
 <b>{{ max[1] }}:</b> {{ max[0] }} kg <br>
 {% endfor %}
-
+<br>
 <h4>Tilastot treenikerroista kuukausittain</h4>
 {% for month in monthly_workouts %}
 <b>{{ month[0] }}  {{ month[1] }}</b> treenikertoja: {{ month[2] }} <br>
 {% endfor %}
-
+<br>
 <h4>Tilastot treenikerroista vuosittain</h4>
 {% for year in yearly_workouts %}
 <b>{{ year[0] }} </b> treenikertoja: {{ year[1] }} <br>

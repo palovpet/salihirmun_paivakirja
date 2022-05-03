@@ -29,7 +29,9 @@ def sets_and_reps_valid(sets, reps):
 
 
 def weight_valid(weight):
-    if int(weight) < 0:
+    if weight == "":
+        return False
+    if float(weight) < 0:
         return False
     return True
 

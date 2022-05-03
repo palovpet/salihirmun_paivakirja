@@ -1,6 +1,7 @@
 import moves
 import users
 from db import db
+from datetime import date
 
 
 def moves_per_plan(plan_id):
@@ -185,6 +186,8 @@ def gymvisits_all():
     count_trimmed = count.strip("(,)")
     return count_trimmed
 
+def today_date():
+    return date.today()
 
 def get_month_with_number(number):
     if number == 1:

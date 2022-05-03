@@ -9,8 +9,9 @@ import stats
 def index():
     list_plans = plans.list_all()
     stats_found = bool(int(stats.gymvisits_all()) > 0)
+    today = stats.today_date()
     return render_template("index.html", plans=list_plans,
-                           moves=moves.list_all(), stats_found=stats_found)
+                           moves=moves.list_all(), stats_found=stats_found, today=today)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -122,7 +123,7 @@ def document_move():
     if stats.move_documented_today(moveinformations_id, date, plan_id):
         return render_template("error.html", message="Kirjasit jo suorittaneesi tämän liikkeen")
     if not moves.weight_valid(weight):
-        return render_template("error.html", message="Paino ei voi olla negatiivinen")
+        return render_template("error.html", message="Paino ei voi olla negatiivinen eikä tyhjä")
     if not moves.document_moveinfo(weight, moveinformations_id, plan_id, date):
         return render_template("error.html", message="Virhe kirjattaessa treeniä")
     return render_template("/document.html", date=date, plan_name=plan_name,
@@ -137,6 +138,10 @@ def statistics_per_plan():
     count_workouts = stats.gymvisits_one_plan(plan_id)
     first = stats.first_time_one_plan(plan_id)
     last = stats.last_time_one_plan(plan_id)
+    if first == last:
+        last = ""
+    else:
+        last = f", ja viimeksi  {last}"
     return render_template("statistics_one.html", plan_name=plan_name,
                            planinfo=plans.get_moves_in_plan(plan_id), stats_all=stats_all,
                            count_workouts=count_workouts, first=first, last=last)
@@ -149,6 +154,10 @@ def statistics_all():
     count_workouts = stats.gymvisits_all()
     first = stats.first_time_all_plans()
     last = stats.last_time_all_plans()
+    if first == last:
+        last = ""
+    else:
+        last = f", ja viimeksi  {last}"
     return render_template("statistics_all.html", max_weights=max_weights,
                            monthly_workouts=monthly_workouts, yearly_workouts=yearly_workouts,
                            count_workouts=count_workouts, first=first, last=last)

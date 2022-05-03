@@ -18,7 +18,7 @@ Sisäänkirjautunut salihirmu: <i>{{ session.user_name }}</i>
     {% endfor %}
   </select><br>
   <label for="date"> ja treenipäivä </label>
-  <input type="date" name="date">
+  <input type="date" name="date" value= "{{ today }}">
   <a href="/document">
     <input type="submit" value="Siirry kirjaukseen">
   </a>
