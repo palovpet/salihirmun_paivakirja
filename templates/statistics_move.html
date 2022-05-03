@@ -2,13 +2,13 @@
 
 {% block content %}
 
-{% if all_weights %}
+{% if weights %}
 
 <h3>Käyttäjän <i>{{ session.user_name }}</i> tilastot liikkeelle <i> {{ move_name }} </i></h3>
 
 {% for weight in weights %}
-{{ weight[1]  }}: {{ weight[0]  }}kg  (Saliohjelmassa <i>{{ weight[2]  }}</i> 
-{{ weight[3]  }} sarjaa, {{ weight[4]  }} toistoa) <br>
+  {{ weight[1]  }}: {{ weight[0]  }}kg  (Saliohjelmassa <i>{{ weight[2]  }}</i> 
+  {{ weight[3]  }} sarjaa, {{ weight[4]  }} toistoa) <br>
 {% endfor %}
 
 {% else %}

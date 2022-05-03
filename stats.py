@@ -20,7 +20,7 @@ def moves_per_plan(plan_id):
         weight = f": {move[3]} kg"
         day = str(move[4])
         if move_id == previous:
-            row = ["", "", "", date, weight]
+            row = ["", "", "", day, weight]
             moves_to_print.append(row)
         else:
             row = [name, sets, reps, day, weight]
@@ -29,7 +29,7 @@ def moves_per_plan(plan_id):
                 moves_to_print.append(empty)
                 moves_to_print.append(empty)
             moves_to_print.append(row)
-    previous = move_id
+        previous = move_id
     return moves_to_print
 
 

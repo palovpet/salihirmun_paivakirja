@@ -52,8 +52,17 @@ Sisäänkirjautunut salihirmu: <i>{{ session.user_name }}</i>
 {% if stats_found %}
 <h3>Tarkastele tilastoja</h3>
 
+<form action="/statistics_all" method="POST">
+  <h4>Tilastot kaikista saliohjelmista</h4>
+  Tarkastele tilastoja treenikertojen toistuvuudesta ja kirjattujen liikkeiden maksimipainoista
+  <input type="submit" name="stats_all" value="Näytä tilastot">
+  <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+</form>
+<br>
+
 <form action="/statistics_one" method="POST">
-  <label for="plan_name">Tarkastele yksittäisen saliohjelman tilastoja</label>
+  <h4>Tilastot yksittäisistä saliohjelmista</h4>
+  <label for="plan_name">Valitse yksittäinen saliohjelma tarkasteltavaksi</label>
   <select name="plan_name" id="plan_name">
     {% for plan in plans %}
     <option value= "{{ plan.name }}""> {{ plan.name }}</option>
@@ -64,15 +73,9 @@ Sisäänkirjautunut salihirmu: <i>{{ session.user_name }}</i>
 </form>
 <br>
 
-<form action="/statistics_all" method="POST">
-  Tarkastele tilastoja treenikerroista ja liikkeistä jotka ovat saliohjelmissasi
-  <input type="submit" name="stats_all" value="Näytä tilastot">
-  <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-</form>
-<br>
-
 <form action="/statistics_move" method="POST">
-  <label for="move_name">Tarkastele yksittäisen liikkeen tilastoja</label>
+  <h4>Tilastot yksittäisestä liikkeestä</h4>
+  <label for="move_name">Valitse yksittäisen liike tarkasteltavaksi</label>
   <select name="move_name" id="move_name">
     {% for move in moves %}
     <option value= "{{ move.name }}""> {{ move.name }}</option>
