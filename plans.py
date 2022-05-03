@@ -58,7 +58,7 @@ def get_name_with_plan_id(plan_id):
 
 
 def get_moves_in_plan(plan_id):
-    sql = """SELECT m.name, mi.sets, mi.reps, mi.weight, mi.id 
+    sql = """SELECT m.name, mi.sets, mi.reps, mi.weight, mi.id
              FROM moves m, moveinformations mi WHERE mi.id IN (SELECT moveinfo_id FROM movesinplans
              WHERE plan_id=:plan_id AND visible=TRUE) AND m.id=mi.move_id"""
     result = db.session.execute(sql, {"plan_id": plan_id})

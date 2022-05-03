@@ -4,18 +4,31 @@
 Valittu saliohjelma: <i>{{ plan_name }}</i> <br>
 Pvm: {{ date }} <br>
 
-{% for m in moves_and_weights %}
+{% if moves %}
+<h5>
+Kirjaa paino maksimissaan kahden desimaalin tarkkuudella, kehonpainolla tehtävä liike kirjataan merkitsemällä painoksi nolla. 
+Kunkin liikkeen voi kirjata vain kertaalleen yhden harjoituksen aikana.  
+</h5>
+
+{% for move in moves %}
 <form action="/documentmove" method="POST">
-<b>{{ m[0] }}: {{ m[1] }} sarjaa {{ m[2] }} toistoa </b> <br>
-   {{ m[3] }} {{ m[4] }} <br>
-  <input type="number" step=".01" name="weight" value="{{ m[3] }}"> kg
+<b>{{ move[0] }}: {{ move[1] }} sarjaa {{ move[2] }} toistoa </b> <br>
+   {{ move[3] }} {{ move[4] }} <br>
+  <input type="number" step=".01" name="weight" value="{{ move[3] }}"> kg
   <input type="submit" name="movetodocument" value="Kirjaa"> <br><br>
-  <input type="hidden" name="moveinformations_id" value="{{ m[5] }}">
+  <input type="hidden" name="moveinformations_id" value="{{ move[5] }}">
   <input type="hidden" name="plan_name" value="{{ plan_name }}">
   <input type="hidden" name="date" value="{{ date }}">
   <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
+
 {% endfor %}
+
+{% else %}
+<br>
+<h5>Et ole vielä lisännyt liikkeitä tähän saliohjelmaan</h5>
+<br>
+{% endif %}
 
 <a href="/">Palaa etusivulle</a>
 

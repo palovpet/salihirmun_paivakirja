@@ -12,7 +12,7 @@ def login(username, password):
     if not check_password_hash(user.password, password):
         return False
     session["user_id"] = user[0]
-    session["user_name"] = username    
+    session["user_name"] = username
     session["csrf_token"] = secrets.token_hex(16)
     return True
 
@@ -26,21 +26,21 @@ def logout():
 
 
 def signin(username, password):
-    if username_and_password_valid(username) and username_and_password_valid(password):
-        hash_value = generate_password_hash(password)
-        try:
-            sql = "INSERT INTO users (username,password) VALUES (:username,:password)"
-            db.session.execute(
-                sql, {"username": username, "password": hash_value})
-            db.session.commit()
-        except:
-            return False
-        return login(username, password)
-    return False
+    if not username_and_password_valid(username, password):
+        return False
+    hash_value = generate_password_hash(password)
+    try:
+        sql = "INSERT INTO users (username,password) VALUES (:username,:password)"
+        db.session.execute(
+            sql, {"username": username, "password": hash_value})
+        db.session.commit()
+    except:
+        return False
+    return True
 
 
-def username_and_password_valid(string):
-    return len(string) < 20 and len(string) > 3
+def username_and_password_valid(string1, string2):
+    return len(string1) <= 20 and len(string2) <= 20 and len(string1) >= 3 and len(string2) >= 3
 
 
 def user_id():

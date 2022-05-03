@@ -1,8 +1,7 @@
+from datetime import date
 import moves
 import users
 from db import db
-from datetime import date
-
 
 def moves_per_plan(plan_id):
     sql = """SELECT m.name, mi.sets, mi.reps, mi.weight, d.day, m.id
@@ -11,28 +10,27 @@ def moves_per_plan(plan_id):
     AND m.id=mi.move_id AND d.moveinfo_id=mi.id ORDER BY m.name, d.day DESC"""
     result = db.session.execute(sql, {"plan_id": plan_id})
     list_moves_done = result.fetchall()
-    printable = []
-    edel = 0
+    moves_to_print = []
+    previous = 0
     for move in list_moves_done:
-        mid = move[5]
+        move_id = move[5]
         name = f"{move[0]} :"
         sets = f"{move[1]} sarjaa "
         reps = f"{move[2]} toistoa"
         weight = f": {move[3]} kg"
-        date = str(move[4])
-        if mid == edel:
+        day = str(move[4])
+        if move_id == previous:
             row = ["", "", "", date, weight]
-            printable.append(row)
-            edel = mid
+            moves_to_print.append(row)
         else:
-            row = [name, sets, reps, date, weight]
+            row = [name, sets, reps, day, weight]
             empty = ["", "", "", "", ""]
-            if edel > 0:
-                printable.append(empty)
-                printable.append(empty)
-            printable.append(row)
-            edel = mid
-    return printable
+            if previous > 0:
+                moves_to_print.append(empty)
+                moves_to_print.append(empty)
+            moves_to_print.append(row)
+    previous = move_id
+    return moves_to_print
 
 
 def gymvisits_one_plan(plan_id):
@@ -46,9 +44,9 @@ def gymvisits_one_plan(plan_id):
 def first_time_one_plan(plan_id):
     sql = "SELECT MIN(day) FROM movesdone WHERE plan_id=:plan_id"
     result = db.session.execute(sql, {"plan_id": plan_id})
-    date = result.fetchone()
-    date_toprint = trim_date(date)
-    return date_toprint
+    day = result.fetchone()
+    day_toprint = trim_date(day)
+    return day_toprint
 
 
 def first_time_all_plans():
@@ -56,17 +54,20 @@ def first_time_all_plans():
     sql = """SELECT MIN(day) FROM movesdone WHERE plan_id IN(SELECT id FROM gymplans
              WHERE owner_id=:owner_id)"""
     result = db.session.execute(sql, {"owner_id": owner_id})
-    date = result.fetchone()
-    date_toprint = trim_date(date)
-    return date_toprint
+    day = result.fetchone()
+    day_toprint = trim_date(day)
+    return day_toprint
 
 
 def last_time_one_plan(plan_id):
     sql = "SELECT MAX(day) FROM movesdone WHERE plan_id=:plan_id"
     result = db.session.execute(sql, {"plan_id": plan_id})
-    date = result.fetchone()
-    date_toprint = trim_date(date)
-    return date_toprint
+    day = result.fetchone()
+    day_toprint = trim_date(day)
+    first = first_time_one_plan(plan_id)
+    if first == day_toprint:
+        return ""
+    return f"ja viimeksi {day_toprint}"
 
 
 def last_time_all_plans():
@@ -74,17 +75,20 @@ def last_time_all_plans():
     sql = """SELECT MAX(day) FROM movesdone WHERE plan_id IN
              (SELECT id FROM gymplans WHERE owner_id=:owner_id)"""
     result = db.session.execute(sql, {"owner_id": owner_id})
-    date = result.fetchone()
-    date_toprint = trim_date(date)
-    return date_toprint
+    day = result.fetchone()
+    day_toprint = trim_date(day)
+    first = first_time_all_plans()
+    if first == day_toprint:
+        return ""
+    return f"ja viimeksi {day_toprint}"
 
 
-def trim_date(date):
-    date_trimmed = str(date).strip("datetime.date()")
-    datelist = date_trimmed.split(",")
-    year = datelist[0]
-    month = datelist[1]
-    day = datelist[2].strip(")")
+def trim_date(day):
+    day_trimmed = str(day).strip("datetime.date()")
+    daylist = day_trimmed.split(",")
+    year = daylist[0]
+    month = daylist[1]
+    day = daylist[2].strip(")")
     month_long = get_month_with_number(int(month))
     return f"{day} {month_long}ta {year}"
 

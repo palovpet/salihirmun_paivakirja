@@ -2,8 +2,12 @@
 
 {% block content %}
 
+{% if session.user_id %}
+
 <h3>Muokattava saliohjelma: <i>{{ plan_name }}</i></h3>
-Toistoja ja sarjoja on oltava vähintään yksi.
+
+<h5>Kukin liike voi olla saliohjelmassa vain kerran. Sarjoihin ja toistoihin on syötettävä nollaa suurempi luku.</h5>
+
 <form action="/addmove" method="POST">
   <label for="move_name">Valitse lisättävä liike  </label>
   <select name="move_name" id="move_name">
@@ -34,5 +38,7 @@ Toistoja: <input type="number" name="reps">
 {% endif %}
 <br>
 <a href="/">Palaa etusivulle</a>
+
+{% endif %}
 
 {% endblock %}

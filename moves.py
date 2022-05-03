@@ -31,7 +31,7 @@ def sets_and_reps_valid(sets, reps):
 def weight_valid(weight):
     if weight == "":
         return False
-    if float(weight) < 0:
+    if float(weight) < 0 or float(weight) > 300:
         return False
     return True
 
@@ -43,7 +43,6 @@ def get_moveinfo(moveinfo_id):
 
 
 def document_moveinfo(weight, moveinfo_id, plan_id, date):
-    weight = weight
     moveinfo = get_moveinfo(moveinfo_id)
     move_id = moveinfo[0]
     sets = moveinfo[1]
@@ -62,7 +61,7 @@ def document_moveinfo(weight, moveinfo_id, plan_id, date):
 
 def document_movedone(moveinfo_id, plan_id, day):
     try:
-        sql = """INSERT INTO movesdone (moveinfo_id, plan_id, day) 
+        sql = """INSERT INTO movesdone (moveinfo_id, plan_id, day)
                 VALUES (:moveinfo_id, :plan_id, :day)"""
         db.session.execute(
             sql, {"moveinfo_id": moveinfo_id, "plan_id": plan_id, "day": day})

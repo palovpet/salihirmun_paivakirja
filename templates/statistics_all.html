@@ -3,7 +3,7 @@
 {% block content %}
 
 <h3>Käyttäjän <i>{{ session.user_name }}</i> tilastot</h3>
-Olet kirjannut yhteensä <b>{{ count_workouts }}</b> treenikertaa, ensimmäisen kerran {{ first  }} {{ last }} <br>
+Olet kirjannut yhteensä <b>{{ count }}</b> treenikertaa, ensimmäisen kerran {{ first  }} {{ last }} <br>
 <br>
 <h4>Korkeimmat kirjatut sarjapainot</h4>
 {% for max in max_weights %}
