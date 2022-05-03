@@ -1,45 +1,42 @@
 ## Salihirmun päiväkirja
-Sovelluksella kirjataan kuntosalitreenin sarjapainoja ja treenikertoja. Omia treenejä ja tilastoja voi katsella, ja vertailla omia tuloksia muiden käyttäjien tuloksiin. Sovellus optimoidaan käytettäväksi puhelimella.
+Salihirmun päiväkirjassa käyttäjä voi luoda itselleen saliohjelmia, kirjata tehtyjä treenejä ja tarkastella statistiikkaa omasta kehityksestä. Sovellus on optimoitu käytettäväksi älypuhelimella, jonka vuoksi visuaalinen ilme ei tietokoneen näytöllä ole yhtä miellyttävä kuin älypuhelimen.
+
+Sovellus on käytettävissä [herokussa](https://salihirmun-paivakirja.herokuapp.com/).
+
+*Sovellus on totetutettu Helsingin yliopiston tietojenkäsittelytieteen aineopintojen kurssin TKT20011: Tietokantasovellus harjoitustyönä.*
 
 
-### Välipalautukseen 3 valmistuneet toiminnallisuudet:
-Alla on kuvattu tässä vaiheessa valmistuneet toiminnallisuudet, joita voi myös testata [herokussa](https://salihirmun-paivakirja.herokuapp.com/).
+### Kuvaus sovelluksen toiminnallisuuksista
 
-Käyttäjä voi kirjautua sovellukseen käyttäen käyttäjätunnusta ja salasanaa:
-- Uusi käyttäjätunnus voidaan luoda ja salasana valita. Käyttäjätunnukseksi ei hyväksytä nimimerkkiä joka on jo käytössä, lisäksi salasana on syötettävä kaksi kertaa ja niiden on oltava samat
+#### Käyttäjä voi luoda itselleen tunnukset ja kirjautua sovellukseen käyttäen käyttäjätunnusta ja salasanaa.
 
+#### Käyttäjä voi luoda itselleen enintään 5 saliohjelmaa:
+- Saliohjelman luominen:
+    - Luo uusi saliohjelma -osioon annetaan saliohjelman nimi, ja napsautetaan  Tallenna
+- Saliohjelman muokkaaminen:
+    - Saliohjelmien luonti ensimmäistä kertaa ja muokkaus myöhemmin tehdään valitsemalla haluttu saliohjelma Muokkaa saliohjelmaa -osion alasvetovalikosta ja napsauttamalla Näytä ja muokkaa
+    - Yhteen saliohjelmaan voi lisätä enintään kymmenen eri liikettä, liikkeet valitaan alasvetovalikosta ja niille on annettava sarja- ja toistomäärät
+    - Saliohjelmaan kuuluvat liikkeet näkyvät muokkaustilan osiossa Saliohjelman liikkeet
+    - Liikkeen voi poistaa napsauttamalla halutun liikkeen kohdalla Poista liike -paniketta
+    
+Mikäli jo käytössä olevaan saliohjelmaan tulee suuria muutoksia on suositeltavaa luoda uusi saliohjelma, koska saliohjelmakohtaisessa statistiikassa näytetään myös liikkeet jotka ovat aiemmin olleen osana saliohjelmaa.
+    
+#### Käyttäjä voi kirjata kuntosalitreenin:
+- Valitaan päivämäärä (oletuksena on kuluva päivä) ja mikä saliohjelma on suoritettu
+- Jokaisen liikkeen kohdalla kirjataan sarjapainot, kehonpainolla tehtävän liikkeen painoksi kirjataan 0kg
+- Jokaisen liikkeen kohdalla oletuksena liikkeen sarjapainoksi tarjotaan edellisellä kerralla kirjattua, liikkeen kohdalla näytetään myös milloin kyseinen kirjaus on tehty (mikäli tieto on tallennettu aiemmin)
+- Kirjattavaa painoa voi muokata, painoksi hyväksytään arvot 0-300kg kahden desimaalin tarkkuudella
 
-Käyttäjä voi luoda max 5 pohjaa kuntosalitreenille:
-- Käyttäjä voi luoda uuden saliohjelman ja muokata aiemmin luomiaan
-    - Etusivulla on lista käyttäjän saliohjelmista, jos niitä ei ole, on näkyvillä kenttä johon lisätään ensimmäisen saliohjelman nimi
-    - Kun saliohjelmia on useampi, valitaan alasvetovalikosta ohjelma jota halutaan muokata, ja napsautetaan Näytä ja muokkaa
-- Saliohjelmia sallitaan max 5 per käyttäjä
-- Saliohjelman muokkaustilassa lisätään liikkeitä valitsemalla liike alasvetovalikosta ja antamalla sarjojen ja toistojen lukumäärä
-- Saliohjelman liikkeet -osiossa näkyy suunnitelmassa olevat liikkeet, sarjat ja toistot
-- Saliohjelmasta voi poistaa liikkeen napsauttamalla Saliohjelman liikkeet -osiossa Poista liike -painiketta kyseisen likkeen kohdalla
-- Yhteen saliohjelmaan sallitaan max 10 liikettä, tietty liike voi olla yhdessä saliohjelmassa vain kerran
+Tietyn saliohjelman ja sitä myötä siihen kuuluvien liikkeiden sarjapainot voi kirjata vain kerran yhdelle vuorokaudelle.
 
+#### Käyttäjä voi katsoa tilastoja omista treeneistään läpi saliohjelmien:
+- Tilastot aukeavat Tilastot kaikista saliohjelmista -osion Näytä tilastot -painikkeesta
+- Tilastoissa näytetään ensimmäinen treenikerta, viimeisin treenikerta, treenikertojen kokonaismäärä, kirjattujen liikkeiden korkeimmat sarjapainot, sekä tilastot treenikerroista kuukausittain ja vuosittain
 
-Käyttäjä voi kirjata kuntosalitreenin:
-- Kirjataan päivämäärä ja mikä saliohjelma on suoritettu
-- Jokaisen liikkeen kohdalla kirjataan sarjapainot
-- Jokaisen liikkeen kohdalla oletuksena liikkeen sarjapainoksi tarjotaan edellisellä kerralla kirjattua, mutta sitä voi muokata
-- Viimeisin kirjattu paino näytetään myös liikkeen kohdalla, mikäli tieto on olemassa
+#### Käyttäjä voi katsella yksittäisen saliohjelman tilastoja:
+- Saliohjelma valitaan tarkasteltavaksi Tilastot yksittäisistä saliohjelmista -osion alasvetovalikosta ja näytetään kun Näytä tilastot -painiketta napsautetaan
+- Tilastoissa näytetään ensimmäinen treenipäivä, viimeisin treenipäivä, montako treenikirjausta on tehty ja liikkeiden sarjapainojen kehitys
 
-Käyttäjä voi katsella yksittäisen saliohjelman tilastoja:
-- Liikkeiden sarjapainojen kehitys
-- Ensimmäinen treenikirjaus, viimeisin treenikirjaus, montako treenikirjausta on tehty
-
-Käyttäjä voi katsoa tilastoja omista treeneistään läpi saliohjelmien. Saatavilla olevat toiminnot:
-- Ensimmäinen treenikirjaus, viimeisin treenikirjaus, montako treenikirjausta on yhteensä
-- Tilasto siitä kuinka usein treejenä on tehty kuukaudessa / vuodessa
-
-Jokaisen liikeeen joka kuuluu johonkin käyttäjän treenipohjaan kohdalla voidaan tarkastella kehitystä
-
-Visuaalinen ilme on viimeistelemätön. Huomoitavaa, että sovellus on ajateltu pääasiassa älypuhelimella käytettäväksi, joten visuaalinen ilme on siistimpi puhelimella kuin tietokoneen selaimella.
-
-### Keskeneräiset toiminnallisuudet:
-
-Käyttäjä voi verrata omia tilastojaan muiden käyttäjien tilastoihin. Saatavilla olevat toiminnot:
-- Treenikertojen erot (kumpi on treenannut enemmän kuukaudessa / vuodessa)
-- Niiden liikkeiden osalta jotka kuuluvat kummankin johonkin treenipohjaan voi vertailla sarjapainojen max arvojen eroja
+#### Käyttäjä voi katsoa tilastoa yksittäisen liikkeen sarjapainojen kehityksestä:
+- Liike valitaan tarkasteluun Tilastot yksittäisestä liikkeestä -osion alasvetovalikosta
+- Tilastoissa näytetään kyseisen liikkeen kirjattuja painoja, sekä tiedot saliohjelmasta johon kirjaus kuuluu
