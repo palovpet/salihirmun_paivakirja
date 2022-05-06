@@ -49,9 +49,9 @@ def signin():
 def addplan():
     if request.method == "GET":
         return render_template("index.html", plans=plans.list_all(),
-                           moves=moves.list_all(),
-                           stats_found=bool(int(stats.gymvisits_all()) > 0),
-                           today=stats.today_date())
+                               moves=moves.list_all(),
+                               stats_found=bool(int(stats.gymvisits_all()) > 0),
+                               today=stats.today_date())
     if request.method == "POST":
         users.check_csrf()
         name = request.form["name"]
