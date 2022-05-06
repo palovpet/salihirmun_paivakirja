@@ -1,4 +1,4 @@
-## Salihirmun päiväkirja
+### Salihirmun päiväkirja
 Salihirmun päiväkirjassa käyttäjä voi luoda itselleen saliohjelmia, kirjata tehtyjä treenejä ja tarkastella statistiikkaa omasta kehityksestä. Sovellus on optimoitu käytettäväksi älypuhelimella, jonka vuoksi visuaalinen ilme ei tietokoneen näytöllä ole yhtä miellyttävä kuin älypuhelimen.
 
 Sovellus on käytettävissä [herokussa](https://salihirmun-paivakirja.herokuapp.com/).
@@ -25,7 +25,7 @@ Mikäli jo käytössä olevaan saliohjelmaan tulee suuria muutoksia on suositelt
 - Valitaan päivämäärä (oletuksena on kuluva päivä) ja mikä saliohjelma on suoritettu
 - Jokaisen liikkeen kohdalla kirjataan sarjapainot, kehonpainolla tehtävän liikkeen painoksi kirjataan 0kg
 - Jokaisen liikkeen kohdalla oletuksena liikkeen sarjapainoksi tarjotaan edellisellä kerralla kirjattua, liikkeen kohdalla näytetään myös milloin kyseinen kirjaus on tehty (mikäli tieto on tallennettu aiemmin)
-- Kirjattavaa painoa voi muokata, painoksi hyväksytään arvot 0-300kg kahden desimaalin tarkkuudella
+- Kirjattavaa painoa voi muokata, painoksi hyväksytään arvot 0-300kg kahden desimaalin tarkkuudella (tai kokonaislukuna)
 
 Tietyn saliohjelman ja sitä myötä siihen kuuluvien liikkeiden sarjapainot voi kirjata vain kerran yhdelle vuorokaudelle.
 
@@ -40,3 +40,6 @@ Tietyn saliohjelman ja sitä myötä siihen kuuluvien liikkeiden sarjapainot voi
 #### Käyttäjä voi katsoa tilastoa yksittäisen liikkeen sarjapainojen kehityksestä:
 - Liike valitaan tarkasteluun Tilastot yksittäisestä liikkeestä -osion alasvetovalikosta
 - Tilastoissa näytetään kyseisen liikkeen kirjattuja painoja, sekä tiedot saliohjelmasta johon kirjaus kuuluu
+
+## Kommentti sovelluksen teknisestä laadusta
+Sovellus on kirjoitettu noudattaen Python-koodin ohjelmointityyliä, ja laatua on tarkistetty käyttäen Pylint-työkalua. Routes-luokkaan jäi muutamia rivejä, jotka ovat yli sallitun rivipituuden. Näissä tapauksissa rivit olisi saatu lyhyemmäksi vain luomalla metodeihin välitallennusta varten muutoin turhia muuttujia. Kyseisen luokan kaikki metodit noudattavat yhtenäisesti tapaa, että muuttujiin tallennetaan tietoja metodin sisällä vain mikäli ne saadaan käyttäjältä esim. lomakkeen kautta, ja muutoin taas muilta python-luokilta kysyttävät tiedot annetaan suoraan render_templane -metodeille.
